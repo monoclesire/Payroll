@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: url('pics/loginbg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.signup-img {
+  width: 150px;
+  height: auto;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2C4972;
+}
+
+.form-label {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 16px;
+  color: #2C4972;
+  transition: all 0.2s ease;
+  background: #fff;
+  padding: 0 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #acacac;
+  border-radius: 5px;
+}
+
+.form-group input:focus {
+  border-color: #325E89;
+  outline: none;
+}
+
+.form-group input:focus + .form-label,
+.form-group input:not(:placeholder-shown) + .form-label {
+  top: -10px;
+  left: 15px;
+  font-size: 12px;
+  color: #325E89;
+}
+
+.login-link {
+  color: #325E89;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  background-color: #2C4972;
+  border-color: #2C4972;
+  font-size: 1.25rem;
+  padding: 10px 0;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active {
+  background-color: #325E89;
+  border-color: #325E89;
+}
+
+.btn:active,
+.btn.active {
+  background-color: #2C4972;
+}
