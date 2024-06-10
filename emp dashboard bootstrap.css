@@ -24,8 +24,13 @@
     --tran-05: all 0.3s ease;
 }
 
+body, html {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body{
-    min-height: 105vh;
+    min-height: 110vh;
     background-color: var(--body-color);
     transition: var(--tran-05);
 }
@@ -412,7 +417,7 @@ th, td, tr {
 /* Modal styles */
 
 .modal-dialog { 
-    max-width: 80%;
+    max-width: 40%;
     width: auto;
 }
 
@@ -464,21 +469,8 @@ th, td, tr {
     border-top: 1px solid var(--primary-color-light);
 }
 
-.modal-footer .btn-secondary {
-    background-color: var(--sidebar-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    color: var(--text-color);
-    transition: var(--tran-03);
-}
-
-.modal-footer .btn-secondary:hover {
-    background-color: var(--primary-color);
-}
-
 .modal-footer .btn-primary {
-    background-color: var(--primary-color);
+    background-color: var(--dashboard-text-color);
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
