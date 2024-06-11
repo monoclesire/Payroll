@@ -1,3 +1,14 @@
+<?php
+include('database.php');
+$pending_sql = "SELECT * FROM employee_pending_leaves";
+$pending_query = mysqli_query($connect,$pending_sql);
+
+$approved_sql = "SELECT * FROM employee_approved_leaves";
+$approved_query = mysqli_query($connect,$approved_sql);
+
+$declined_sql = "SELECT * FROM employee_declined_leaves";
+$declined_query = mysqli_query($connect,$declined_sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,15 +99,15 @@
             <div class="row table-button">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="tableRadios" id="tableRadio1" value="table1" checked>
-                    <label class="form-check-label" for="tableRadio1">Table 1</label>
+                    <label class="form-check-label" for="tableRadio1">Pending</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="tableRadios" id="tableRadio2" value="table2">
-                    <label class="form-check-label" for="tableRadio2">Table 2</label>
+                    <label class="form-check-label" for="tableRadio2">Approved</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="tableRadios" id="tableRadio3" value="table3">
-                    <label class="form-check-label" for="tableRadio3">Table 3</label>
+                    <label class="form-check-label" for="tableRadio3">Declined</label>
                 </div>
             </div>
             <div class="row table">
@@ -110,31 +121,41 @@
                                         <th>Name</th>
                                         <th>Position</th>
                                         <th>Leave Type</th>
+                                        <th>Applied On</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        <td>Content 4</td>
-                                        <td>Content 5</td>
-                                        <td>Content 6</td>
-                                        <td>Content 6</td>
-                                        <td style="width: 30%">
-                                            <form method='POST'>
-                                                <button type='submit' name='view_details' value='". $infos["employee_id"] ."' 
-                                                style='width:96px; font-family: Poppins, sans-serif;
-                                                font-size: 15px; color: black; background-color: white;
-                                                '>View Details</button>
-                                                <button type='submit' name='approved' value='". $infos["employee_id"] ."'
-                                                style='width:96px; font-family: Poppins, sans-serif;
-                                                font-size: 15px; color: white; background-color: green;
-                                                '>Approve</button>
-                                                <button type='submit' name='delete' value='". $infos["employee_id"] ."'
-                                                style='width:96px; font-family: Poppins, sans-serif;
-                                                font-size: 15px; color: white; background-color: red;
-                                                '>Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                        while($pending = mysqli_fetch_assoc($pending_query)){
+                                            echo "
+                                                <tr>
+                                                    <td>". $pending["pending_leave_id"] ."</td>
+                                                    <td>". $pending["Name"] ."</td>
+                                                    <td>". $pending["Position"] ."</td>
+                                                    <td>". $pending["Leave_type"] ."</td>
+                                                    <td>". $pending["applied_date"] ."</td>
+                                                    <td style='width: 30%'>
+                                                        <form method='POST'>
+                                                            <button type='submit' name='view_details' value='". $pending["pending_leave_id"] ."' 
+                                                            style='width:96px; font-family: Poppins, sans-serif;
+                                                            font-size: 15px; color: black; background-color: white;
+                                                            '>View Details</button>
+                                                            <button type='submit' name='approve' value='". $pending["pending_leave_id"] ."'
+                                                            style='width:96px; font-family: Poppins, sans-serif;
+                                                            font-size: 15px; color: white; background-color: green;
+                                                            '>Approve</button>
+                                                            <button type='submit' name='decline' value='". $pending["pending_leave_id"] ."'
+                                                            style='width:96px; font-family: Poppins, sans-serif;
+                                                            font-size: 15px; color: white; background-color: red;
+                                                            '>Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                        
+                                            ";
+                                        }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -161,11 +182,11 @@
                                                 style='width:96px; font-family: Poppins, sans-serif;
                                                 font-size: 15px; color: black; background-color: white;
                                                 '>View Details</button>
-                                                <button type='submit' name='approved' value='". $infos["employee_id"] ."'
+                                                <button type='submit' name='approve' value='". $infos["employee_id"] ."'
                                                 style='width:96px; font-family: Poppins, sans-serif;
                                                 font-size: 15px; color: white; background-color: green;
                                                 '>Approve</button>
-                                                <button type='submit' name='delete' value='". $infos["employee_id"] ."'
+                                                <button type='submit' name='decline' value='". $infos["employee_id"] ."'
                                                 style='width:96px; font-family: Poppins, sans-serif;
                                                 font-size: 15px; color: white; background-color: red;
                                                 '>Delete</button>
@@ -198,11 +219,11 @@
                                                 style='width:96px; font-family: Poppins, sans-serif;
                                                 font-size: 15px; color: black; background-color: white;
                                                 '>View Details</button>
-                                                <button type='submit' name='approved' value='". $infos["employee_id"] ."'
+                                                <button type='submit' name='approve' value='". $infos["employee_id"] ."'
                                                 style='width:96px; font-family: Poppins, sans-serif;
                                                 font-size: 15px; color: white; background-color: green;
                                                 '>Approve</button>
-                                                <button type='submit' name='delete' value='". $infos["employee_id"] ."'
+                                                <button type='submit' name='decline' value='". $infos["employee_id"] ."'
                                                 style='width:96px; font-family: Poppins, sans-serif;
                                                 font-size: 15px; color: white; background-color: red;
                                                 '>Delete</button>
@@ -217,6 +238,13 @@
             </div>
         </div>
     </div>
+    <?php
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            if(isset($_POST['approve'])){
+                $approve_sqll = "INSERT INTO employee_approved_leaves VALUES()";
+            }
+        }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
     <script>

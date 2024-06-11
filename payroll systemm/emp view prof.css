@@ -1,0 +1,569 @@
+/* Google Font Import - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    /* ===== Colors ===== */
+    --body-color: #E4E9F7;
+    --sidebar-color: #2C4972;
+    --primary-color: #6A96B9; 
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #FFFFFF;
+    --dashboard-text-color: #325E89; 
+
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+}
+
+body, html {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body{
+    min-height: 110vh;
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+
+::selection{
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.main_sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 230px;
+}
+
+/* ===== Sidebar ===== */
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 230px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
+}
+.sidebar.close{
+    width: 78px;
+}
+
+.sidebar li{
+    height: 40px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.sidebar header .image,
+.sidebar .icon{
+    min-width: 50px; 
+    border-radius: 6px;
+}
+
+.sidebar .icon{
+    min-width: 50px; 
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.sidebar .text,
+.sidebar .icon{
+    color: var(--text-color); 
+    transition: var(--tran-03);
+}
+
+.sidebar .text{
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+    display: flex;
+    align-items: center; 
+}
+.sidebar.close .text{
+    opacity: 0;
+}
+
+
+.sidebar header{
+    position: relative;
+}
+
+.sidebar header .image-text{
+    display: flex;
+    align-items: center;
+}
+.sidebar header .logo-text{
+    display: flex;
+    flex-direction: column;
+}
+header .image-text .name {
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+header .image-text .profession{
+    font-size: 16px;
+    margin-top: -2px;
+    display: block;
+}
+
+.sidebar header .image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; 
+}
+
+.sidebar header .image img{
+    width: 40px;
+    border-radius: 6px;
+}
+
+.sidebar header .toggle{
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: var(--primary-color);
+    color: #FFFFFF; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+
+body.dark .sidebar header .toggle{
+    color: #FFFFFF; 
+}
+
+.sidebar.close .toggle{
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.sidebar .menu{
+    margin-top: 0px; 
+}
+
+.sidebar li a{
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--tran-03);
+}
+
+.sidebar li a:hover{
+    background-color: var(--primary-color); 
+}
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text{
+    color: var(--text-color); 
+}
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text{
+    color: var(--text-color);
+}
+
+.sidebar .menu-bar{
+    height: calc(100% - 55px);
+    margin-left: -2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar{
+    display: none;
+}
+
+.sidebar .bottom-content {
+    margin-left: 2rem;
+    padding-bottom: 10px; 
+    margin-bottom: 10px; 
+}
+
+.sidebar.close ~ .home{
+    left: 78px;
+    height: 120vh;
+    width: calc(100% - 78px);
+}
+
+/* --- BOOSTRAP ---*/
+
+.label {
+    margin-left: 3%;
+    color: #325E89;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.label-small {
+    color: #325E89;
+    font-size: 18px;
+    font-weight: 500;
+    justify-content: left;
+}
+
+.profile {
+    background-color: #fff;
+    width: 80%;
+    height: 100px;
+    padding: 10px;
+    margin-left: 10%;
+    margin-top: 2%;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    align-items: center;
+}
+
+.personal-details {
+    background-color: #fff;
+    width: 80%;
+    height: 170px;
+    padding: 10px;
+    margin-left: 10%;
+    margin-top: 1%;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    align-items: center;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 5px;
+    margin-right: 20px; /* Space between the image and the text */
+}
+
+.employee-info h3, .employee-info p {
+    margin: 0; /* Remove default margins */
+    text-align: left; /* Ensure text is left-aligned */
+    margin-left: 3%;
+}
+
+.employee-info h3 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.employee-info p {
+    font-size: 20px;
+}
+
+.edit-button {
+    background-color: #325E89;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--tran-03);
+    margin-left: 30%;
+}
+
+.edit-button:hover {
+    background-color: #6A96B9;
+    color: #fff;
+}
+
+.new-containers {
+    display: flex;
+    width: 80%;
+    margin-top: 20px;
+    margin-left: 10%;
+}
+
+.left-container, .right-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.left-container {
+    flex: 1;
+    width: fit-content;
+    margin-right: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex; 
+}
+
+.important {
+    margin: auto;
+}
+
+.right-container {
+    width: 350px;
+    height: 370px;
+}
+
+table {
+    width: 100%;
+}
+
+th, td, tr {
+    padding: 10px;
+}
+
+.right-container .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.right-container .input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-container .input-field label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+.right-container .input-field input {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+}
+
+.edit-profile-button {
+    background-color: #325E89;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: var(--tran-03);
+    margin-top: 10px;
+}
+
+.edit-profile-button:hover {
+    background-color: #6A96B9;
+}
+
+.change-password-button {
+    background-color: #325E89;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: var(--tran-03);
+    margin-top: 20px;
+}
+
+.change-password-button:hover {
+    background-color: #6A96B9;
+}
+
+.sidebar.close ~ section {
+    margin-left: 0px; /* Width of closed sidebar */
+    transition: margin-left 0.3s;
+}
+
+.sidebar ~ section {
+    margin-left: 150px; /* Width of open sidebar */
+    transition: margin-left 0.3s;
+}
+
+/* Modal styles */
+
+.modal-dialog { 
+    max-width: 40%;
+    width: auto;
+}
+
+.modal-header {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--primary-color-light);
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+}
+
+.modal-header .btn-close {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body .form-label {
+    font-weight: 500;
+    color: var(--dashboard-text-color);
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.modal-body .form-control,
+.modal-body .form-select {
+    border: 2px solid var(-);
+    border-radius: 4px;
+    padding: 10px;
+    outline: none;
+    transition: var(--tran-03);
+}
+
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+.modal-footer {
+    padding: 10px;
+    background-color: var(--primary-color-light);
+    border-top: 1px solid var(--primary-color-light);
+}
+
+.modal-footer .btn-primary {
+    background-color: var(--dashboard-text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: var(--text-color);
+    transition: var(--tran-03);
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: var(--sidebar-color);
+}
+
+.modal-content {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--primary-color-light);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sep {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--dashboard-text-color);
+}
+
+select:disabled {
+    background-color: #fafafa; /* Background color for disabled select */
+    color: #757b79; /* Text color for disabled select */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+    opacity: 1; /* Ensure full opacity */
+}
+
+@media (min-width: 600px) {
+    .responsive-div {
+        padding: 30px;
+        margin: 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .responsive-div {
+        padding: 30px;
+        margin: 60px;
+        margin-top: 20px;
+}}
+
+/* Media queries for responsive sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100px;
+    }
+    .sidebar.close {
+        width: 80px;
+    }
+    .sidebar .text {
+        display: none;
+    }
+    .sidebar span{
+        display: none;
+    }
+    .home {
+        left: 100px;
+        width: calc(100% - 100px);
+    }
+    .sidebar.close ~ .home {
+        left: 50px;
+        width: calc(100% - 50px);
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 80px;
+    }
+    .sidebar.close {
+        width: 80px;
+    }
+    .sidebar span{
+        display: none;
+    }
+    .sidebar .toggle {
+        display: none !important;
+    }
+    .sidebar .text {
+        display: none;
+    }
+    .sidebar ul
+    .home {
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+    .sidebar.close ~ .home {
+        left: 30px;
+        width: calc(100% - 30px);
+    }
+}
