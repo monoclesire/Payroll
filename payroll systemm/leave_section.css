@@ -45,14 +45,30 @@ body.dark{
 }
 .table {
     background-color: #fff;
-    width: 85%;
-    height: 70px;
+    width: 96%;
     padding: 3px;
-    margin-left: 10%;
+    margin-left: 2%;
     margin-top: 2%;
+    border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     align-items: center;
 }
+
+.tablee {
+    width: 100%;
+    align-items: center;
+}
+
+.table-button {
+    display: flex;
+    align-items: center;
+    width: 85%;
+    padding: 3px;
+    border-radius: 8px;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
 .action-button {
     background-color: #4CAF50;
     color: white;
@@ -112,18 +128,10 @@ body.dark{
     }
 .confirm-buttons button {
     width: 40%;
-    }
-.label {
-    margin-left: 3%;
-    color: #325E89;
-    font-size: 30px;
-    font-weight: 500;
 }
 
 .label-small {
     color: #325E89;
-    font-size: 18px;
-    font-weight: 500;
     justify-content: left;
 }
 
@@ -219,6 +227,12 @@ header .image-text .name {
     align-items: center;
     justify-content: center;
     padding: 10px; 
+}
+.form-check {
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: .125rem;
+    width: 100px;
 }
 
 .sidebar header .image img{
@@ -377,7 +391,7 @@ body.dark .sidebar li a:hover .text{
 .bar {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
 }
 .bar p{
     color: #000000;
@@ -399,5 +413,10 @@ body.dark .sidebar li a:hover .text{
     align-items: center;
 }
 
-
+.table-container {
+    display: none;
+}
+.table-container.active {
+    display: flex;
+}
 
