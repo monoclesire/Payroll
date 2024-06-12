@@ -420,3 +420,29 @@ body.dark .sidebar li a:hover .text{
     display: flex;
 }
 
+.tablee {
+    width: 100%;
+    border-collapse: collapse;
+}
+.tablee th, .tablee td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.tablee th {
+    background-color: #f2f2f2;
+}
+
+.message-box {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 15px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    display: none;
+}
+.message-box.declined {
+    background-color: red;
+}
+
