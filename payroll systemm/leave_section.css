@@ -59,16 +59,6 @@ body.dark{
     align-items: center;
 }
 
-.table-button {
-    display: flex;
-    align-items: center;
-    width: 85%;
-    padding: 3px;
-    border-radius: 8px;
-    margin-left: 2%;
-    margin-top: 2%;
-}
-
 .action-button {
     background-color: #4CAF50;
     color: white;
@@ -228,12 +218,7 @@ header .image-text .name {
     justify-content: center;
     padding: 10px; 
 }
-.form-check {
-    min-height: 1.5rem;
-    padding-left: 1.5em;
-    margin-bottom: .125rem;
-    width: 100px;
-}
+
 
 .sidebar header .image img{
     width: 40px;
@@ -446,3 +431,48 @@ body.dark .sidebar li a:hover .text{
     background-color: red;
 }
 
+.table-button {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    width: 50%;
+    border-radius: 8px;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.radio {
+    display: inline-flex;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(13, 48, 99, 0.733); 
+}
+
+.form-check {
+    width: auto;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: .125rem;
+}
+
+.form-check input {
+    display: none;
+}
+
+.form-check-label {
+    padding: 10px 30px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    background: #2C4972;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.form-check-label:not(:last-of-type) {
+    border-right: 1px solid #2c49729a;
+}
+
+.form-check-input:checked + .form-check-label {
+    background: #6A96B9;
+}
