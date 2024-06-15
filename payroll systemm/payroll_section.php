@@ -1,5 +1,20 @@
 <?php
 include('database.php');
+
+$position_sql = "SELECT Position FROM employee_positions";
+$position_query = mysqli_query($connect,$position_sql);
+
+$employees_sql = "SELECT first_name,surname FROM employee_accounts";
+$employees_query = mysqli_query($connect,$employees_sql);
+
+if(isset($_POST['submit'])){
+    $position_num = $_POST['position_name'];
+    $employee_name = $_POST['emp_name'];
+
+    $payroll_sql = "SELECT * FROM employee_accounts WHERE Position_number = '$position_num' && first_name = '$employee_name'";
+    $payroll_query = mysqli_query($connect,$payroll_sql);
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,100 +109,121 @@ include('database.php');
                 <div class="col-sm-12 dropdown-div">
                     <div class="dropdown">
                         <div class="dropdown-input-container">
-                            <input type="text" class="dropdown-input" placeholder="Select an option" readonly>
+                            <form method="POST">
+                                <input type="text" name="position_name" class="dropdown-input" placeholder="Select position" readonly>
+                            </form>
                             <div class="arrow-container">
                                 <div class="arrow-up">&#9650;</div>
                                 <div class="arrow-down">&#9660;</div>
                             </div>
                         </div>
                         <div class="dropdown-content">
-                            <div class="dropdown-item">Option 1</div>
-                            <div class="dropdown-item">Option 2</div>
-                            <div class="dropdown-item">Option 3</div>
-                            <div class="dropdown-item">Option 4</div>
+                            <?php
+                                while($positions = mysqli_fetch_assoc($position_query)){
+                                    echo "<div class='dropdown-item'>".$positions['Position']."</div>";
+                                }
+                            ?>
                         </div>
                     </div>
                     <div class="dropdown">
                         <div class="dropdown-input-container">
-                            <input type="text" class="dropdown-input" placeholder="Select an option" readonly>
+                            <form method="POST">
+                                <input type="text" name="emp_name" class="dropdown-input" placeholder="Select Position First" readonly>
+                            </form>
                             <div class="arrow-container">
                                 <div class="arrow-up">&#9650;</div>
                                 <div class="arrow-down">&#9660;</div>
                             </div>
                         </div>
                         <div class="dropdown-content">
-                            <div class="dropdown-item">Option 1</div>
-                            <div class="dropdown-item">Option 2</div>
-                            <div class="dropdown-item">Option 3</div>
-                            <div class="dropdown-item">Option 4</div>
+                            <?php
+                                while($employees = mysqli_fetch_assoc($employees_query)){
+                                    echo "<div class='dropdown-item'>".$employees['first_name']."&nbsp;".$employees['surname']."</div>";
+                                }
+                            ?>
                         </div>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown month-dropdown">
+                    <div class="dropdown-input-container">
+                        <input type="text" class="dropdown-input" placeholder="Select month" readonly>
+                        <div class="arrow-container">
+                            <div class="arrow-up">&#9650;</div>
+                            <div class="arrow-down">&#9660;</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item" data-value="01">January</div>
+                        <div class="dropdown-item" data-value="02">February</div>
+                        <div class="dropdown-item" data-value="03">March</div>
+                            <div class="dropdown-item" data-value="04">April</div>
+                            <div class="dropdown-item" data-value="05">May</div>
+                            <div class="dropdown-item" data-value="06">June</div>
+                            <div class="dropdown-item" data-value="07">July</div>
+                            <div class="dropdown-item" data-value="08">August</div>
+                            <div class="dropdown-item" data-value="09">September</div>
+                            <div class="dropdown-item" data-value="10">October</div>
+                            <div class="dropdown-item" data-value="11">November</div>
+                            <div class="dropdown-item" data-value="12">December</div>
+                        </div>
+                    </div>
+                    <div class="dropdown year-dropdown">
                         <div class="dropdown-input-container">
-                            <input type="text" class="dropdown-input" placeholder="Select an option" readonly>
+                            <input type="text" class="dropdown-input" placeholder="Select year" readonly>
                             <div class="arrow-container">
                                 <div class="arrow-up">&#9650;</div>
                                 <div class="arrow-down">&#9660;</div>
                             </div>
                         </div>
                         <div class="dropdown-content">
-                            <div class="dropdown-item">Option 1</div>
-                            <div class="dropdown-item">Option 2</div>
-                            <div class="dropdown-item">Option 3</div>
-                            <div class="dropdown-item">Option 4</div>
+                            <div class="dropdown-item" data-value="2024">2024</div>
+                            <div class="dropdown-item" data-value="2023">2023</div>
+                            <div class="dropdown-item" data-value="2022">2022</div>
+                            <div class="dropdown-item" data-value="2021">2021</div>
+                            <div class="dropdown-item" data-value="2020">2020</div>
                         </div>
                     </div>
-                    <div class="dropdown">
-                        <div class="dropdown-input-container">
-                            <input type="text" class="dropdown-input" placeholder="Select an option" readonly>
-                            <div class="arrow-container">
-                                <div class="arrow-up">&#9650;</div>
-                                <div class="arrow-down">&#9660;</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-content">
-                            <div class="dropdown-item">Option 1</div>
-                            <div class="dropdown-item">Option 2</div>
-                            <div class="dropdown-item">Option 3</div>
-                            <div class="dropdown-item">Option 4</div>
-                        </div>
-                    </div>
-                    <button class="change-pass-btn">Submit</button>
+                    <input type="submit" class="change-pass-btn" name="submit" value="Submit">
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="x-sm-12">
                     <div class="row tablee">
                         <div class="col-sm-12">
                             <table>
+                                <?php
+                                while($infos = mysqli_fetch_assoc($payroll_query)){
+                                    echo "
                                 <tr>
                                     <td>Employee ID</td>
-                                    <td>1</td>
+                                    <td>".$infos['employee_id']."</td>
                                     <td>Bank Name</td>
                                     <td>BPO Bank</td>
                                 </tr>
                                 <tr>
                                     <td>Employee Name</td>
-                                    <td>Juan Dela Cruz</td>
+                                    <td>".$infos['first_name'].$infos['surname']."</td>
                                     <td>Bank Account</td>
                                     <td>879368213</td>
                                 </tr>
                                 <tr>
                                     <td>Gender</td>
-                                    <td>Male</td>
+                                    <td>".$infos['gender']."</td>
                                 </tr>
                                 <tr>
                                     <td>Address</td>
-                                    <td>Biringan City</td>
+                                    <td>".$infos['Address']."</td>
                                 </tr>
                                 <tr>
                                     <td>Position</td>
-                                    <td>Service Crew</td>
+                                    <td>".$infos['Position']."</td>
                                 </tr>
                                 <tr>
                                     <td>Date Joined</td>
                                     <td>10-25-2023</td>
                                 </tr>
+                                    ";
+                                }
+                                ?>
                             </table>
                         </div>
                     </div>
@@ -363,6 +399,74 @@ include('database.php');
             });
         });
     </script>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function setupDropdown(dropdownSelector, defaultValueFunction) {
+                var dropdown = document.querySelector(dropdownSelector);
+                var dropdownInput = dropdown.querySelector('.dropdown-input');
+                var dropdownItems = dropdown.querySelectorAll('.dropdown-item');
+                var dropdownContent = dropdown.querySelector('.dropdown-content');
+                var arrowUp = dropdown.querySelector('.arrow-up');
+                var arrowDown = dropdown.querySelector('.arrow-down');
 
+                // Function to set the default value
+                function setDefaultValue() {
+                    var defaultValue = defaultValueFunction();
+                    var defaultItem = dropdown.querySelector(`.dropdown-item[data-value="${defaultValue}"]`);
+                    if (defaultItem) {
+                        dropdownInput.value = defaultItem.innerText;
+                    }
+                }
+
+                // Set the default value when the page loads
+                setDefaultValue();
+
+                // Toggle dropdown visibility
+                function toggleDropdown() {
+                    dropdownContent.classList.toggle('show');
+                    arrowUp.classList.toggle('hidden');
+                    arrowDown.classList.toggle('hidden');
+                }
+
+                dropdownInput.addEventListener('click', toggleDropdown);
+                arrowUp.addEventListener('click', toggleDropdown);
+                arrowDown.addEventListener('click', toggleDropdown);
+
+                // Handle item selection
+                dropdownItems.forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        dropdownInput.value = this.innerText;
+                        dropdownContent.classList.remove('show');
+                        arrowUp.classList.add('hidden');
+                        arrowDown.classList.remove('hidden');
+                    });
+                });
+
+                // Close the dropdown if clicking outside of it
+                document.addEventListener('click', function(event) {
+                    if (!dropdown.contains(event.target)) {
+                        dropdownContent.classList.remove('show');
+                        arrowUp.classList.add('hidden');
+                        arrowDown.classList.remove('hidden');
+                    }
+                });
+            }
+
+            // Function to get the current year
+            function getCurrentYear() {
+                return new Date().getFullYear();
+            }
+
+            // Function to get the current month
+            function getCurrentMonth() {
+                var month = new Date().getMonth() + 1; // JavaScript months are 0-11
+                return month < 10 ? '0' + month : month;
+            }
+
+            // Initialize the dropdowns
+            setupDropdown('.year-dropdown', getCurrentYear);
+            setupDropdown('.month-dropdown', getCurrentMonth);
+        });
+    </script>
+</body>
 </html>
