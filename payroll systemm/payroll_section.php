@@ -90,7 +90,7 @@ include('database.php');
                     </div>
                 </div>
             </div>
-            <div class="row table">
+            <div class="row dropdown-inputs-div">
                 <div class="col-sm-12 dropdown-div">
                     <div class="dropdown">
                         <div class="dropdown-input-container">
@@ -152,91 +152,146 @@ include('database.php');
                             <div class="dropdown-item">Option 4</div>
                         </div>
                     </div>
-                    <button class="change-pass-btn">Change Password</button>
+                    <button class="change-pass-btn">Submit</button>
                 </div>
             </div>
-            <div class="row tablee">
+            <div class="row">
                 <div class="col-sm-12">
-                    <table>
-                        <tr>
-                            <td>Employee ID</td>
-                            <td>1</td>
-                            <td>Bank Name</td>
-                            <td>BPO Bank</td>
-                        </tr>
-                        <tr>
-                            <td>Employee Name</td>
-                            <td>Juan Dela Cruz</td>
-                            <td>Bank Account</td>
-                            <td>879368213</td>
-                        </tr>
-                        <tr>
-                            <td>Gender</td>
-                            <td>Male</td>
-                        </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td>Biringan City</td>
-                        </tr>
-                        <tr>
-                            <td>Position</td>
-                            <td>Service Crew</td>
-                        </tr>
-                        <tr>
-                            <td>Date Joined</td>
-                            <td>10-25-2023</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="row payslip_div">
-                <div class="col-sm-6 income-div">
-                    <div class="inputs-div1">
-                        <b>Income</b>
-                        <div class="input-field">
-                            <label>Pay Method:</label>
-                            <input type="text">
-                        </div>
-                        <div class="input-field">
-                            <label>No. of Days:</label>
-                            <input type="text">
-                        </div>
-                        <div class="input-field">
-                            <label>OT hr/Day:</label>
-                            <input type="text">
-                        </div>
-                        <div class="input-field">
-                            <label>Holiday Pay(day):</label>
-                            <input type="text">
+                    <div class="row tablee">
+                        <div class="col-sm-12">
+                            <table>
+                                <tr>
+                                    <td>Employee ID</td>
+                                    <td>1</td>
+                                    <td>Bank Name</td>
+                                    <td>BPO Bank</td>
+                                </tr>
+                                <tr>
+                                    <td>Employee Name</td>
+                                    <td>Juan Dela Cruz</td>
+                                    <td>Bank Account</td>
+                                    <td>879368213</td>
+                                </tr>
+                                <tr>
+                                    <td>Gender</td>
+                                    <td>Male</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>Biringan City</td>
+                                </tr>
+                                <tr>
+                                    <td>Position</td>
+                                    <td>Service Crew</td>
+                                </tr>
+                                <tr>
+                                    <td>Date Joined</td>
+                                    <td>10-25-2023</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                    <div class="inputs-div2">
-                        <div class="input-field">
-                            <label>Rate per Day:</label>
-                            <input type="text">
+                    <div class="row payslip_div">
+                        <div class="col-sm-6 income-div">
+                            <b>Income:</b>
+                            <div class="inputs-div1">
+                                <div class="input-field">
+                                    <label>Pay Method:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>No. of Days:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>OT hr/Day:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>Holiday Pay(day):</label>
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="inputs-div2">
+                                <div class="input-field">
+                                    <label>Rate per Day:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>Rate Wage:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>Ot hr/Day Pay:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>Holiday Pay:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field" style="margin-top:20px;margin-left:-20%;">
+                                    <label>Gross pay:</label>
+                                    <input type="text" style="width: 170px;height: 45px;">
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-field">
-                            <label>Rate Wage:</label>
-                            <input type="text">
+                        <div class="col-sm-6 deduct-div">
+                            <b>Deductions:</b>
+                            <div class="inputs-div1">
+                                <div class="input-field">
+                                    <label style="margin-left:-20%;">Philhealth:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label style="margin-left:-14%;">PAGIBIG:</label>
+                                    <input type="text">
+                                </div>
+                                <div class="input-field">
+                                    <label>SSS:</label>
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="inputs-div2">
+                                <b>Other Deductions: </b>
+                                <div class="input-field" style="margin-left:-14%;">
+                                    <input type="text">
+                                    <input type="text">
+                                </div>
+                                <div class="input-field" style="margin-left:-14%;">
+                                    <input type="text">
+                                    <input type="text">
+                                </div>
+                                <div class="input-field" style="margin-left:-14%;">
+                                    <input type="text">
+                                    <input type="text">
+                                </div>
+                                <div class="input-field" style="margin-left:-14%;">
+                                    <input type="text">
+                                    <input type="text">
+                                </div>
+                                <div class="input-field" style="margin-left:-20%;">
+                                    <label>Total Deductions:</label>
+                                    <input type="text">
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-field">
-                            <label>Ot hr/Day Pay:</label>
-                            <input type="text">
-                        </div>
-                        <div class="input-field">
-                            <label>Holiday Pay:</label>
-                            <input type="text">
-                        </div>
-                        <div class="input-field">
-                            <label>Gross pay:</label>
-                            <input type="text">
+                    </div>
+                    <div class="row last_row">
+                        <div class="col-sm-12 last_row_col">
+                            <div class="input-field">
+                                <label style="font-size: 25px;font-weight: 500;">Net Pay:</label>
+                                <input type="text" style="width: 200px;height: 45px;">
+                            </div>
+                            <div class="btns_div">
+                                <button class="change-pass-btn">Reset</button>
+                                <button class="change-pass-btn">Cancel</button>
+                                <button class="change-pass-btn">Generate Payslip</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 deduct-div">
-                   <p>asdasd</p>
-                </div>
             </div>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -244,7 +299,7 @@ include('database.php');
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const dropdowns = document.querySelectorAll('.dropdown');
-            
+
             dropdowns.forEach(dropdown => {
                 const dropdownInput = dropdown.querySelector('.dropdown-input');
                 const dropdownContent = dropdown.querySelector('.dropdown-content');

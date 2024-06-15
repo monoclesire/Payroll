@@ -49,6 +49,17 @@ body.dark{
     padding: 3px;
     margin-left: 1%;
     margin-top: 1%;
+    margin-bottom: 0;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    border-bottom: 1px solid;
+    
+}
+
+.dropdown-inputs-div {
+    background-color: #fff;
+    width: 96%;
+    padding: 10px;
+    margin-left: 1%;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     
@@ -65,12 +76,14 @@ th, td, tr {
 .tablee {
     background-color: #fff;
     width: 96%;
+    border-collapse: collapse;
     padding: 3px;
     margin-left: 1%;
     margin-top: 1%;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
+
 
 .action-button {
     background-color: #4CAF50;
@@ -411,11 +424,6 @@ body.dark .sidebar li a:hover .text{
     display: flex;
 }
 
-.tablee {
-    width: 96%;
-    border-collapse: collapse;
-}
-
 .table-button {
     display: flex;
     align-items: center;
@@ -436,7 +444,7 @@ body.dark .sidebar li a:hover .text{
 
 .dropdown-input {
     width: 100%;
-    padding: 10px;
+    padding: 3px;
     box-sizing: border-box;
     padding-right: 30px; /* Space for the arrow container */
 }
@@ -456,7 +464,7 @@ body.dark .sidebar li a:hover .text{
     cursor: pointer;
     padding: 2px;
     user-select: none;
-    font-size: 10px;
+    font-size: 7px;
 }
 
 .arrow-up:hover, .arrow-down:hover {
@@ -509,20 +517,21 @@ body.dark .sidebar li a:hover .text{
     background-color: #6A96B9;
 }
 
-.payslip_div {
+.last_row {
+    background-color: #fff;
     width: 96%;
+    border-collapse: collapse;
     padding: 3px;
     margin-left: 1%;
-    margin-top: 1%;
+    margin-top: 0.5%;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
-.income-div{
-    flex: 2;
+.last_row_col{
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    padding: 10px;
-    width: auto;
+    justify-content: space-between;
+    width: 96%;
     height: 100%;
     margin-right: 1%;
     background-color: #fff;
@@ -531,30 +540,48 @@ body.dark .sidebar li a:hover .text{
 
 }
 
-.inputs-div1{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
+.payslip_div {
+    width: 98%;
+    padding: 3px;
+    margin-left: 1%;
+    margin-top: 1%;
 }
 
-.inputs-div2{
+.income-div{
+    display: flex;
+    width: 49%;
+    height: 100%;
+    margin-right: 1%;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+
+}
+
+.inputs-div1,.inputs-div2{
     display: flex;
     flex-direction: column;
     align-items: left;
-    justify-content: center;
+    margin-top: 5%;
 }
 
 
 .deduct-div{
-    width: 49%;
-    height: 100%;
-    margin-left: 1%;
+    display: flex;
+    justify-content: space-evenly;
+    width: 48%;
+    height: 290px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
+.btns_div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+}
 
 
 .input-field{
@@ -575,12 +602,13 @@ body.dark .sidebar li a:hover .text{
     font-size: 14px;
     font-weight: 400;
     color: #333;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 1px solid #aaa;
     padding: 0 15px;
     height: 30px;
     width: 110px;
     margin: 8px 0;
+    margin-left: 5px;
 }
 
 .input-field input:focus,
