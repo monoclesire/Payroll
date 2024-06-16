@@ -497,7 +497,7 @@ body.dark .sidebar li a:hover .text{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .change-pass-btn {
@@ -621,4 +621,11 @@ body.dark .sidebar li a:hover .text{
 
 .input-field input[type="date"]:valid{
     color: #333;
+}
+
+.positionForm{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
 }

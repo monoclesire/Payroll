@@ -14,7 +14,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
         WHERE employee_positions.Position = '$position_name'
     ");
     while ($emps = mysqli_fetch_assoc($employees_qry)) {
-        echo "<div class='dropdown-item' onclick=\"selectEmployee('".$emps['first_name']." ".$emps['surname']."')\">".$emps['first_name']." ".$emps['surname']."</div>";
+        echo "<div class='dropdown-item' onclick=\"selectEmployee('".$emps['first_name']."')\">".$emps['first_name']."</div>";
     }
     exit; // Terminate the script to only return the AJAX response
 }
@@ -30,46 +30,6 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="payroll_section.css">
     <title>Leave Section</title>
-    <script>
-        function toggleDropdown(dropdownId) {
-            var dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle("show");
-        }
-
-        function selectPosition(position) {
-            document.getElementById('position_name').value = position;
-            fetchEmployees(position);
-        }
-
-        function selectEmployee(employee) {
-            document.getElementById('emp_name').value = employee;
-        }
-
-        function fetchEmployees(position) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "", true); // Same PHP file
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    document.getElementById('employeeDropdown').innerHTML = xhr.responseText;
-                    document.getElementById('employeeDropdown').classList.add("show"); // Open the dropdown after update
-                }
-            };
-            xhr.send("ajax=fetch_employees&position_name=" + position);
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-input')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -150,83 +110,81 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                 </div>
             </div>
             <div class="row dropdown-inputs-div">
-                <div class="col-sm-12 dropdown-div">
-                    <div class="dropdown month-dropdown">
-                        <div class="dropdown-input-container">
-                            <input type="text" class="dropdown-input" placeholder="Select month" readonly>
-                            <div class="arrow-container">
-                                <div class="arrow-up">&#9650;</div>
-                                <div class="arrow-down">&#9660;</div>
+                <div class="col-sm-12">
+                    <form method="POST" class="positionForm">
+                        <div class="dropdown month-dropdown">
+                            <div class="dropdown-input-container">
+                                <input type="text" class="dropdown-input" placeholder="Select month" readonly>
+                                <div class="arrow-container">
+                                    <div class="arrow-up">&#9650;</div>
+                                    <div class="arrow-down">&#9660;</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-content">
+                                <div class="dropdown-item" data-value="01">January</div>
+                                <div class="dropdown-item" data-value="02">February</div>
+                                <div class="dropdown-item" data-value="03">March</div>
+                                <div class="dropdown-item" data-value="04">April</div>
+                                <div class="dropdown-item" data-value="05">May</div>
+                                <div class="dropdown-item" data-value="06">June</div>
+                                <div class="dropdown-item" data-value="07">July</div>
+                                <div class="dropdown-item" data-value="08">August</div>
+                                <div class="dropdown-item" data-value="09">September</div>
+                                <div class="dropdown-item" data-value="10">October</div>
+                                <div class="dropdown-item" data-value="11">November</div>
+                                <div class="dropdown-item" data-value="12">December</div>
                             </div>
                         </div>
-                        <div class="dropdown-content">
-                            <div class="dropdown-item" data-value="01">January</div>
-                            <div class="dropdown-item" data-value="02">February</div>
-                            <div class="dropdown-item" data-value="03">March</div>
-                            <div class="dropdown-item" data-value="04">April</div>
-                            <div class="dropdown-item" data-value="05">May</div>
-                            <div class="dropdown-item" data-value="06">June</div>
-                            <div class="dropdown-item" data-value="07">July</div>
-                            <div class="dropdown-item" data-value="08">August</div>
-                            <div class="dropdown-item" data-value="09">September</div>
-                            <div class="dropdown-item" data-value="10">October</div>
-                            <div class="dropdown-item" data-value="11">November</div>
-                            <div class="dropdown-item" data-value="12">December</div>
-                        </div>
-                    </div>
-                    <div class="dropdown year-dropdown">
-                        <div class="dropdown-input-container">
-                            <input type="text" class="dropdown-input" placeholder="Select year" readonly>
-                            <div class="arrow-container">
-                                <div class="arrow-up">&#9650;</div>
-                                <div class="arrow-down">&#9660;</div>
+                        <div class="dropdown year-dropdown">
+                            <div class="dropdown-input-container">
+                                <input type="text" class="dropdown-input" placeholder="Select year" readonly>
+                                <div class="arrow-container">
+                                    <div class="arrow-up">&#9650;</div>
+                                    <div class="arrow-down">&#9660;</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-content">
+                                <div class="dropdown-item" data-value="2024">2024</div>
+                                <div class="dropdown-item" data-value="2023">2023</div>
+                                <div class="dropdown-item" data-value="2022">2022</div>
+                                <div class="dropdown-item" data-value="2021">2021</div>
+                                <div class="dropdown-item" data-value="2020">2020</div>
                             </div>
                         </div>
-                        <div class="dropdown-content">
-                            <div class="dropdown-item" data-value="2024">2024</div>
-                            <div class="dropdown-item" data-value="2023">2023</div>
-                            <div class="dropdown-item" data-value="2022">2022</div>
-                            <div class="dropdown-item" data-value="2021">2021</div>
-                            <div class="dropdown-item" data-value="2020">2020</div>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropdown-input-container">
-                            <input type="text" name="position_name" id="position_name" class="dropdown-input" placeholder="Select position" readonly onclick="toggleDropdown('positionDropdown')">
-                            <div class="arrow-container">
-                                <div class="arrow-up" onclick="toggleDropdown('positionDropdown')">&#9650;</div>
-                                <div class="arrow-down" onclick="toggleDropdown('positionDropdown')">&#9660;</div>
+                        <div class="dropdown">
+                            <div class="dropdown-input-container">
+                                    <input type="text" name="position_name" id="position_name" class="dropdown-input" placeholder="Select position" readonly onclick="toggleDropdown('positionDropdown')">
+                                <div class="arrow-container">
+                                    <div class="arrow-up" onclick="toggleDropdown('positionDropdown')">&#9650;</div>
+                                    <div class="arrow-down" onclick="toggleDropdown('positionDropdown')">&#9660;</div>
+                                </div>
+                            </div>
+                            <div id="positionDropdown" class="dropdown-content">
+                                <?php
+                                    while ($positions = mysqli_fetch_assoc($position_query)) {
+                                        echo "<div class='dropdown-item' onclick=\"selectPosition('".$positions['Position']."')\">".$positions['Position']."</div>";
+                                    }
+                                ?>
                             </div>
                         </div>
-                        <div id="positionDropdown" class="dropdown-content">
-                            <?php
-                                while ($positions = mysqli_fetch_assoc($position_query)) {
-                                    echo "<div class='dropdown-item' onclick=\"selectPosition('".$positions['Position']."')\">".$positions['Position']."</div>";
-                                }
-                            ?>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropdown-input-container">
-                            <input type="text" name="emp_name" id="emp_name" class="dropdown-input" placeholder="Select Employee" readonly onclick="toggleDropdown('employeeDropdown')">
-                            <div class="arrow-container">
-                                <div class="arrow-up" onclick="toggleDropdown('employeeDropdown')">&#9650;</div>
-                                <div class="arrow-down" onclick="toggleDropdown('employeeDropdown')">&#9660;</div>
+                        <div class="dropdown">
+                            <div class="dropdown-input-container">
+                                <input type="text" name="emp_name" id="emp_name" class="dropdown-input" placeholder="Select Employee" readonly onclick="toggleDropdown('employeeDropdown')">
+                                <div class="arrow-container">
+                                    <div class="arrow-up" onclick="toggleDropdown('employeeDropdown')">&#9650;</div>
+                                    <div class="arrow-down" onclick="toggleDropdown('employeeDropdown')">&#9660;</div>
+                                </div>
+                            </div>
+                            <div id="employeeDropdown" class="dropdown-content">
+                                <!-- Employees will be dynamically populated here -->
                             </div>
                         </div>
-                        <div id="employeeDropdown" class="dropdown-content">
-                            <!-- Employees will be dynamically populated here -->
-                        </div>
-                    </div>
-
-                    <form method="POST" id="positionForm">
-                        <input type="hidden" name="position_name" id="hidden_position_name" value="">
-                        <input type="hidden" name="emp_name" id="hidden_position_name" value="">
                         <input type="submit" class="change-pass-btn" name="submit" value="Submit">
                     </form>
                 </div>
             </div>
-            <div class="row">
+    
+            <form class="row" id="payrollSection"  style="display: none;" onsubmit="return validateForm();">
                 <div class="x-sm-12">
                     <div class="row tablee">
                         <div class="col-sm-12">
@@ -241,72 +199,44 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                     ON employee_accounts.Position_number=employee_positions.Position_number
                                     WHERE employee_positions.Position = '$position_namee' AND employee_accounts.first_name = '$employee_name'");
                                     
-                                    while($infos = mysqli_fetch_assoc($payroll_query)){
-                                        echo "
-                                    <tr>
-                                        <td>Employee ID</td>
-                                        <td>".$infos['employee_id']."</td>
-                                        <td>Bank Name</td>
-                                        <td>BPO Bank</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Employee Name</td>
-                                        <td>".$infos['first_name'].$infos['surname']."</td>
-                                        <td>Bank Account</td>
-                                        <td>879368213</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td>".$infos['gender']."</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Address</td>
-                                        <td>".$infos['Address']."</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Position</td>
-                                        <td>".$infos['Position']."</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date Joined</td>
-                                        <td>10-25-2023</td>
-                                    </tr>
-                                        ";
+                                    if (!empty($position_namee) && !empty($employee_name)){
+                                        while(mysqli_num_rows($payroll_query) > 0){
+                                            $infos = mysqli_fetch_assoc($payroll_query);
+                                            echo "
+                                        <tr>
+                                            <td>Employee ID</td>
+                                            <td>".$infos['employee_id']."</td>
+                                            <td>Bank Name</td>
+                                            <td>BPO Bank</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Employee Name</td>
+                                            <td>".$infos['first_name'].$infos['surname']."</td>
+                                            <td>Bank Account</td>
+                                            <td>879368213</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender</td>
+                                            <td>".$infos['gender']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address</td>
+                                            <td>".$infos['Address']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Position</td>
+                                            <td>".$infos['Position']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date Joined</td>
+                                            <td>10-25-2023</td>
+                                        </tr>
+                                            ";
+                                            break;
+                                        }
+                                        echo '<script>document.getElementById("payrollSection").style.display = "block";</script>';
                                     }
                                 }
-                                else{
-                                    echo "
-                                    <tr>
-                                    <td>Employee ID</td>
-                                    <td></td>
-                                    <td>Bank Name</td>
-                                    <td>BPO Bank</td>
-                                </tr>
-                                <tr>
-                                    <td>Employee Name</td>
-                                    <td></td>
-                                    <td>Bank Account</td>
-                                    <td>879368213</td>
-                                </tr>
-                                <tr>
-                                    <td>Gender</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Address</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Position</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Date Joined</td>
-                                    <td>10-25-2023</td>
-                                </tr>
-                                    ";
-                                }
-
                                 ?>
                             </table>
                         </div>
@@ -410,7 +340,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>
@@ -552,5 +482,62 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             setupDropdown('.month-dropdown', getCurrentMonth);
         });
     </script>
+    <script>
+        // Function to toggle dropdown visibility
+        function toggleDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle("show");
+        }
+
+        // Function to select a position and fetch corresponding employees
+        function selectPosition(position) {
+            document.getElementById('position_name').value = position;
+            toggleDropdown('positionDropdown');
+            fetchEmployees(position);
+        }
+
+        // Function to select an employee
+        function selectEmployee(employee) {
+            document.getElementById('emp_name').value = employee;
+            toggleDropdown('employeeDropdown');
+        }
+
+        // Function to fetch employees via AJAX
+        function fetchEmployees(position) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "", true); // Same PHP file
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('employeeDropdown').innerHTML = xhr.responseText;
+                    document.getElementById('employeeDropdown').classList.add("show"); // Open the dropdown after update
+                }
+            };
+            xhr.send("ajax=fetch_employees&position_name=" + encodeURIComponent(position));
+        }
+
+        // Function to validate form submission
+        function validateForm() {
+            var positionName = document.getElementById('position_name').value.trim();
+            var empName = document.getElementById('emp_name').value.trim();
+
+            console.log('Position Name:', positionName);
+            console.log('Employee Name:', empName);
+
+            if (!positionName || !empName) {
+                alert('Please select both Position and Employee.');
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+
+        // Event listener to initialize dropdowns and other necessary functionalities
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize dropdowns, handle clicks, etc.
+            // Ensure other necessary JavaScript functionalities are correctly implemented here
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

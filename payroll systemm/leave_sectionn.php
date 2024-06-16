@@ -256,7 +256,7 @@ include('database.php');
             radio.addEventListener('change', function () {
                 tableContainers.forEach(container => {
                     container.style.display = 'none'; // Hide all tables initially
-                });
+                    });
                 const selectedTable = document.getElementById(this.value);
                 if (selectedTable) {
                     selectedTable.style.display = 'flex'; // Show the selected table
