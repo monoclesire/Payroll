@@ -1,20 +1,24 @@
 <?php
+session_start();
 include('database.php');
 
 $position_sql = "SELECT Position FROM employee_positions";
 $position_query = mysqli_query($connect,$position_sql);
 
-$employees_sql = "SELECT first_name,surname FROM employee_accounts";
-$employees_query = mysqli_query($connect,$employees_sql);
-
-if(isset($_POST['submit'])){
-    $position_num = $_POST['position_name'];
-    $employee_name = $_POST['emp_name'];
-
-    $payroll_sql = "SELECT * FROM employee_accounts WHERE Position_number = '$position_num' && first_name = '$employee_name'";
-    $payroll_query = mysqli_query($connect,$payroll_sql);
-    
+if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POST['position_name'])) {
+    $position_name = mysqli_real_escape_string($connect, $_POST['position_name']);
+    $employees_qry = mysqli_query($connect, "SELECT employee_accounts.first_name, employee_accounts.surname
+        FROM employee_accounts
+        LEFT JOIN employee_positions
+        ON employee_accounts.position_number = employee_positions.position_number
+        WHERE employee_positions.Position = '$position_name'
+    ");
+    while ($emps = mysqli_fetch_assoc($employees_qry)) {
+        echo "<div class='dropdown-item' onclick=\"selectEmployee('".$emps['first_name']." ".$emps['surname']."')\">".$emps['first_name']." ".$emps['surname']."</div>";
+    }
+    exit; // Terminate the script to only return the AJAX response
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +30,46 @@ if(isset($_POST['submit'])){
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="payroll_section.css">
     <title>Leave Section</title>
+    <script>
+        function toggleDropdown(dropdownId) {
+            var dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle("show");
+        }
+
+        function selectPosition(position) {
+            document.getElementById('position_name').value = position;
+            fetchEmployees(position);
+        }
+
+        function selectEmployee(employee) {
+            document.getElementById('emp_name').value = employee;
+        }
+
+        function fetchEmployees(position) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "", true); // Same PHP file
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('employeeDropdown').innerHTML = xhr.responseText;
+                    document.getElementById('employeeDropdown').classList.add("show"); // Open the dropdown after update
+                }
+            };
+            xhr.send("ajax=fetch_employees&position_name=" + position);
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-input')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -107,54 +151,18 @@ if(isset($_POST['submit'])){
             </div>
             <div class="row dropdown-inputs-div">
                 <div class="col-sm-12 dropdown-div">
-                    <div class="dropdown">
-                        <div class="dropdown-input-container">
-                            <form method="POST">
-                                <input type="text" name="position_name" class="dropdown-input" placeholder="Select position" readonly>
-                            </form>
-                            <div class="arrow-container">
-                                <div class="arrow-up">&#9650;</div>
-                                <div class="arrow-down">&#9660;</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-content">
-                            <?php
-                                while($positions = mysqli_fetch_assoc($position_query)){
-                                    echo "<div class='dropdown-item'>".$positions['Position']."</div>";
-                                }
-                            ?>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropdown-input-container">
-                            <form method="POST">
-                                <input type="text" name="emp_name" class="dropdown-input" placeholder="Select Position First" readonly>
-                            </form>
-                            <div class="arrow-container">
-                                <div class="arrow-up">&#9650;</div>
-                                <div class="arrow-down">&#9660;</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-content">
-                            <?php
-                                while($employees = mysqli_fetch_assoc($employees_query)){
-                                    echo "<div class='dropdown-item'>".$employees['first_name']."&nbsp;".$employees['surname']."</div>";
-                                }
-                            ?>
-                        </div>
-                    </div>
                     <div class="dropdown month-dropdown">
-                    <div class="dropdown-input-container">
-                        <input type="text" class="dropdown-input" placeholder="Select month" readonly>
-                        <div class="arrow-container">
-                            <div class="arrow-up">&#9650;</div>
-                            <div class="arrow-down">&#9660;</div>
+                        <div class="dropdown-input-container">
+                            <input type="text" class="dropdown-input" placeholder="Select month" readonly>
+                            <div class="arrow-container">
+                                <div class="arrow-up">&#9650;</div>
+                                <div class="arrow-down">&#9660;</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item" data-value="01">January</div>
-                        <div class="dropdown-item" data-value="02">February</div>
-                        <div class="dropdown-item" data-value="03">March</div>
+                        <div class="dropdown-content">
+                            <div class="dropdown-item" data-value="01">January</div>
+                            <div class="dropdown-item" data-value="02">February</div>
+                            <div class="dropdown-item" data-value="03">March</div>
                             <div class="dropdown-item" data-value="04">April</div>
                             <div class="dropdown-item" data-value="05">May</div>
                             <div class="dropdown-item" data-value="06">June</div>
@@ -182,7 +190,40 @@ if(isset($_POST['submit'])){
                             <div class="dropdown-item" data-value="2020">2020</div>
                         </div>
                     </div>
-                    <input type="submit" class="change-pass-btn" name="submit" value="Submit">
+                    <div class="dropdown">
+                        <div class="dropdown-input-container">
+                            <input type="text" name="position_name" id="position_name" class="dropdown-input" placeholder="Select position" readonly onclick="toggleDropdown('positionDropdown')">
+                            <div class="arrow-container">
+                                <div class="arrow-up" onclick="toggleDropdown('positionDropdown')">&#9650;</div>
+                                <div class="arrow-down" onclick="toggleDropdown('positionDropdown')">&#9660;</div>
+                            </div>
+                        </div>
+                        <div id="positionDropdown" class="dropdown-content">
+                            <?php
+                                while ($positions = mysqli_fetch_assoc($position_query)) {
+                                    echo "<div class='dropdown-item' onclick=\"selectPosition('".$positions['Position']."')\">".$positions['Position']."</div>";
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <div class="dropdown-input-container">
+                            <input type="text" name="emp_name" id="emp_name" class="dropdown-input" placeholder="Select Employee" readonly onclick="toggleDropdown('employeeDropdown')">
+                            <div class="arrow-container">
+                                <div class="arrow-up" onclick="toggleDropdown('employeeDropdown')">&#9650;</div>
+                                <div class="arrow-down" onclick="toggleDropdown('employeeDropdown')">&#9660;</div>
+                            </div>
+                        </div>
+                        <div id="employeeDropdown" class="dropdown-content">
+                            <!-- Employees will be dynamically populated here -->
+                        </div>
+                    </div>
+
+                    <form method="POST" id="positionForm">
+                        <input type="hidden" name="position_name" id="hidden_position_name" value="">
+                        <input type="hidden" name="emp_name" id="hidden_position_name" value="">
+                        <input type="submit" class="change-pass-btn" name="submit" value="Submit">
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -191,31 +232,73 @@ if(isset($_POST['submit'])){
                         <div class="col-sm-12">
                             <table>
                                 <?php
-                                while($infos = mysqli_fetch_assoc($payroll_query)){
+                                if(isset($_POST['submit'])){
+                                    $position_namee = $_POST['position_name'];
+                                    $employee_name = $_POST['emp_name'];
+                                
+                                    $payroll_query = mysqli_query($connect,"SELECT * FROM employee_accounts
+                                    LEFT JOIN employee_positions
+                                    ON employee_accounts.Position_number=employee_positions.Position_number
+                                    WHERE employee_positions.Position = '$position_namee' AND employee_accounts.first_name = '$employee_name'");
+                                    
+                                    while($infos = mysqli_fetch_assoc($payroll_query)){
+                                        echo "
+                                    <tr>
+                                        <td>Employee ID</td>
+                                        <td>".$infos['employee_id']."</td>
+                                        <td>Bank Name</td>
+                                        <td>BPO Bank</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Employee Name</td>
+                                        <td>".$infos['first_name'].$infos['surname']."</td>
+                                        <td>Bank Account</td>
+                                        <td>879368213</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td>".$infos['gender']."</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>".$infos['Address']."</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Position</td>
+                                        <td>".$infos['Position']."</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Joined</td>
+                                        <td>10-25-2023</td>
+                                    </tr>
+                                        ";
+                                    }
+                                }
+                                else{
                                     echo "
-                                <tr>
+                                    <tr>
                                     <td>Employee ID</td>
-                                    <td>".$infos['employee_id']."</td>
+                                    <td></td>
                                     <td>Bank Name</td>
                                     <td>BPO Bank</td>
                                 </tr>
                                 <tr>
                                     <td>Employee Name</td>
-                                    <td>".$infos['first_name'].$infos['surname']."</td>
+                                    <td></td>
                                     <td>Bank Account</td>
                                     <td>879368213</td>
                                 </tr>
                                 <tr>
                                     <td>Gender</td>
-                                    <td>".$infos['gender']."</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>Address</td>
-                                    <td>".$infos['Address']."</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>Position</td>
-                                    <td>".$infos['Position']."</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>Date Joined</td>
@@ -223,6 +306,7 @@ if(isset($_POST['submit'])){
                                 </tr>
                                     ";
                                 }
+
                                 ?>
                             </table>
                         </div>
