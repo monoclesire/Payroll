@@ -111,7 +111,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             </div>
             <div class="row dropdown-inputs-div">
                 <div class="col-sm-12">
-                    <form method="POST" class="positionForm">
+                    <form method="POST" class="positionForm" value="Submit" onsubmit="return validateForm();">
                         <div class="dropdown month-dropdown">
                             <div class="dropdown-input-container">
                                 <input type="text" class="dropdown-input" placeholder="Select month" readonly>
@@ -179,12 +179,12 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                 <!-- Employees will be dynamically populated here -->
                             </div>
                         </div>
-                        <input type="submit" class="change-pass-btn" name="submit" value="Submit">
+                        <input type="submit" class="change-pass-btn" name="submit" >
                     </form>
                 </div>
             </div>
-    
-            <form class="row" id="payrollSection"  style="display: none;" onsubmit="return validateForm();">
+
+            <form class="row" id="payrollSection" onsubmit="return validateForm();" style="display: none;">
                 <div class="x-sm-12">
                     <div class="row tablee">
                         <div class="col-sm-12">
@@ -518,17 +518,16 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
 
         // Function to validate form submission
         function validateForm() {
-            var positionName = document.getElementById('position_name').value.trim();
-            var empName = document.getElementById('emp_name').value.trim();
+            var positionName = document.getElementById("position_name").value;
+            var employeeName = document.getElementById("emp_name").value;
 
-            console.log('Position Name:', positionName);
-            console.log('Employee Name:', empName);
+            console.log("Position Name:", positionName);
+            console.log("Employee Name:", employeeName);
 
-            if (!positionName || !empName) {
-                alert('Please select both Position and Employee.');
+            if (positionName === "" || employeeName === "") {
+                alert("Both position and employee name must be selected.");
                 return false; // Prevent form submission
             }
-
             return true; // Allow form submission
         }
 
@@ -539,5 +538,8 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
         });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        
+    </script>
 </body>
 </html>
