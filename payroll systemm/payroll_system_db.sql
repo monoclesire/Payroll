@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 08:51 AM
+-- Generation Time: Jun 18, 2024 at 06:02 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.15
 
@@ -36,11 +36,12 @@ CREATE TABLE `employee_accounts` (
   `surname` varchar(55) NOT NULL,
   `gender` varchar(55) NOT NULL,
   `contact_number` int(11) NOT NULL,
+  `Address` text NOT NULL,
   `email_address` varchar(55) NOT NULL,
   `password` varchar(20) NOT NULL,
   `bank_account` int(20) NOT NULL,
   `bank_name` varchar(55) NOT NULL,
-  `position` varchar(55) NOT NULL,
+  `Position_number` int(11) NOT NULL,
   `leave_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -48,12 +49,15 @@ CREATE TABLE `employee_accounts` (
 -- Dumping data for table `employee_accounts`
 --
 
-INSERT INTO `employee_accounts` (`employee_id`, `first_name`, `second_name`, `middle_name`, `surname`, `gender`, `contact_number`, `email_address`, `password`, `bank_account`, `bank_name`, `position`, `leave_id`) VALUES
-(202405, 'asfadasd', 'asdasfadas', 'asdasdasda', 'asdasdas', 'dasdasda', 12412312, 'afasdasasf', 'asdasdas', 12423412, 'asfasdasda', 'sasdasfasdas', 4),
-(202406, 'asfasdasd', 'afasdasd', 'asdasdas', 'avsadasda', 'asfadsa', 1212312, 'afsadasd', 'asgasdasdas', 123123, 'asdasfadas', 'asdafasdasd', 5),
-(202407, 'sacfsadasd', 'asfasdad', 'asdadasd', 'asdasfads', 'asdasdas', 12312421, 'afdasfasd', 'asdasdffsa', 123125412, 'asdasfasdaas', 'asdasdasd', 6),
-(202408, 'asdasfadas', 'sadafa', 'sdaasdagsdf', 'vxdfgddfa', 'asfsdfaczxc', 12413123, 'fasdasg', '14asdasczsa', 12312412, 'asasdsafasd', 'asdasdadas', 6),
-(202409, 'asfgagsdasasd', 'dsdasdadsa', 'asgsdeaa', 'sadasdasfasf', 'gdasdasdas', 12353141, 'aasdagad', 'asdasgas', 41241531, 'asdsagadas', 'asdasfasdaf', 7);
+INSERT INTO `employee_accounts` (`employee_id`, `first_name`, `second_name`, `middle_name`, `surname`, `gender`, `contact_number`, `Address`, `email_address`, `password`, `bank_account`, `bank_name`, `Position_number`, `leave_id`) VALUES
+(202405, 'Dhaniel', 'asdasfadas', 'asdasdasda', 'Lofamia', 'dasdasda', 12412312, 'asasdafsadas', 'afasdasasf', 'asdasdas', 12423412, 'asfasdasda', 1, 4),
+(202406, 'Harvey', 'afasdasd', 'asdasdas', 'Nagtalon', 'asfadsa', 1212312, 'adfsfasdasd', 'afsadasd', 'asgasdasdas', 123123, 'asdasfadas', 2, 5),
+(202407, 'Jasmine', 'asfasdad', 'asdadasd', 'Pangilin', 'asdasdas', 12312421, 'fafasdasda', 'afdasfasd', 'asdasdffsa', 123125412, 'asdasfasdaas', 3, 6),
+(202408, 'Jamaeilyn', 'sadafa', 'sdaasdagsdf', 'Gascon', 'asfsdfaczxc', 12413123, 'asfasdadsasd', 'fasdasg', '14asdasczsa', 12312412, 'asasdsafasd', 4, 6),
+(202409, 'asfgagsdasasd', 'dsdasdadsa', 'asgsdeaa', 'sadasdasfasf', 'gdasdasdas', 12353141, 'asgasdasdas', 'aasdagad', 'asdasgas', 41241531, 'asdsagadas', 2, 7),
+(202410, 'okay', 'asfasda', 'sdadsa', 'okay', 'asdasd', 123124123, 'asdasdafsadasd', 'asfasdasd', 'asdasd', 123124123, 'asdasfasdas', 1, 2),
+(202411, 'asfadasd', 'asdasd', 'asdasdasd', 'asfasdasd', 'asdadas', 12314123, '1fsdadasdasdas', '1241312', 'asasfas123', 123124, 'asdasfasd', 4, 4),
+(202412, 'Ej', 'fasda', 'asdasd', 'rod', 'asfasdas', 213124123, 'aasdasdfsa', 'sfasdasfdas', 'dasdasf', 123124124, 'adasfasfas', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -84,6 +88,28 @@ INSERT INTO `employee_pending_leaves` (`leave_id`, `Name`, `Position`, `Leave_ty
 (7, 'asfasdaga', 'dasfadas', 'fasdasfasd', '2024-06-27 00:34:00', 'Declined'),
 (8, 'asfasgasdas', 'fasdasdas', 'asfasdasda', '2024-06-25 00:00:00', 'Approved');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_positions`
+--
+
+CREATE TABLE `employee_positions` (
+  `Position_number` int(11) NOT NULL,
+  `Position` varchar(55) NOT NULL,
+  `Daily_rate` int(55) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee_positions`
+--
+
+INSERT INTO `employee_positions` (`Position_number`, `Position`, `Daily_rate`) VALUES
+(1, 'Service Crew', 480),
+(2, 'Manager', 1100),
+(3, 'Crew-Manager', 500),
+(4, 'Senior-Crew', 500);
+
 --
 -- Indexes for dumped tables
 --
@@ -92,13 +118,21 @@ INSERT INTO `employee_pending_leaves` (`leave_id`, `Name`, `Position`, `Leave_ty
 -- Indexes for table `employee_accounts`
 --
 ALTER TABLE `employee_accounts`
-  ADD PRIMARY KEY (`employee_id`);
+  ADD PRIMARY KEY (`employee_id`),
+  ADD KEY `Position_number` (`Position_number`),
+  ADD KEY `leave_id` (`leave_id`);
 
 --
 -- Indexes for table `employee_pending_leaves`
 --
 ALTER TABLE `employee_pending_leaves`
   ADD PRIMARY KEY (`leave_id`);
+
+--
+-- Indexes for table `employee_positions`
+--
+ALTER TABLE `employee_positions`
+  ADD PRIMARY KEY (`Position_number`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -108,13 +142,30 @@ ALTER TABLE `employee_pending_leaves`
 -- AUTO_INCREMENT for table `employee_accounts`
 --
 ALTER TABLE `employee_accounts`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202410;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202413;
 
 --
 -- AUTO_INCREMENT for table `employee_pending_leaves`
 --
 ALTER TABLE `employee_pending_leaves`
   MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `employee_positions`
+--
+ALTER TABLE `employee_positions`
+  MODIFY `Position_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `employee_accounts`
+--
+ALTER TABLE `employee_accounts`
+  ADD CONSTRAINT `employee_accounts_ibfk_1` FOREIGN KEY (`Position_number`) REFERENCES `employee_positions` (`Position_number`),
+  ADD CONSTRAINT `employee_accounts_ibfk_2` FOREIGN KEY (`leave_id`) REFERENCES `employee_pending_leaves` (`leave_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
