@@ -549,7 +549,6 @@ body.dark .sidebar li a:hover .text{
 .income-div{
     display: flex;
     width: 49%;
-    height: 100%;
     margin-right: 1%;
     background-color: #fff;
     border-radius: 5px;

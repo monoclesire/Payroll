@@ -241,90 +241,97 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                             </table>
                         </div>
                     </div>
+                    <?php
+                    $employee_name = $_POST['emp_name'];
+                    $daily_rate = mysqli_query($connect,"SELECT employee_Positions.Daily_rate
+                    FROM employee_positions
+                    LEFT JOIN employee_accounts
+                    ON employee_accounts.Position_number = employee_positions.Position_number
+                    WHERE first_name = '$employee_name'");
+                    $dl = mysqli_fetch_assoc($daily_rate);
+                    ?>
                     <div class="row payslip_div">
-                        <div class="col-sm-6 income-div">
-                            <b>Income:</b>
-                            <div class="inputs-div1">
-                                <div class="input-field">
-                                    <label>Pay Method:</label>
-                                    <input type="text">
+                        <form method="POST" class="payslip_div">
+                            <div class="col-sm-6 income-div">
+                                <b>Income:</b>
+                                <div class="inputs-div1">
+                                    <div class="input-field" style="margin-top:-10%;margin-bottom:3%;margin-left:13%;">
+                                        <label>Rate per Day:</label>
+                                        <input type="text" id="daily_rate" value="<?php echo $dl['Daily_rate'] ?>" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <label>No. of Days:</label>
+                                        <input type="text" onkeyup = "numdays_comp(this.value);">
+                                    </div>
+                                    <div class="input-field">
+                                        <label>OT hr/Day:</label>
+                                        <input type="text" onkeyup = "ot_hr_comp(this.value);">
+                                    </div>
+                                    <div class="input-field">
+                                        <label style="margin-left: -10%;">Holiday Pay(day):</label>
+                                        <input type="text" onkeyup = "holid_comp(this.value);">
+                                    </div>
                                 </div>
-                                <div class="input-field">
-                                    <label>No. of Days:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field">
-                                    <label>OT hr/Day:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field">
-                                    <label>Holiday Pay(day):</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="inputs-div2">
-                                <div class="input-field">
-                                    <label>Rate per Day:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field">
-                                    <label>Rate Wage:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field">
-                                    <label>Ot hr/Day Pay:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field">
-                                    <label>Holiday Pay:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field" style="margin-top:20px;margin-left:-20%;">
-                                    <label>Gross pay:</label>
-                                    <input type="text" style="width: 170px;height: 45px;">
+                                <div class="inputs-div2">
+                                    <div class="input-field" style="margin-top:10%;">
+                                        <label>Rate Wage:</label>
+                                        <input type="text" id="num_of_days" onkeyup = "wage_value(this.value);">
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Ot hr/Day Pay:</label>
+                                        <input type="text" id="ot_hr" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Holiday Pay:</label>
+                                        <input type="text" id="holiday_pays" readonly>
+                                    </div>
+                                    <div class="input-field" style="margin-top:20px;margin-left:-20%;">
+                                        <label>Gross pay:</label>
+                                        <input type="text" id="grosspay" style="width: 170px;height: 45px;" readonly>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6 deduct-div">
-                            <b>Deductions:</b>
-                            <div class="inputs-div1">
-                                <div class="input-field">
-                                    <label style="margin-left:-20%;">Philhealth:</label>
-                                    <input type="text">
+                            <div class="col-sm-6 deduct-div">
+                                <b>Deductions:</b>
+                                <div class="inputs-div1">
+                                    <div class="input-field">
+                                        <label style="margin-left:-20%;">Philhealth:</label>
+                                        <input type="text" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <label style="margin-left:-14%;">PAGIBIG:</label>
+                                        <input type="text" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <label>SSS:</label>
+                                        <input type="text" readonly>
+                                    </div>
                                 </div>
-                                <div class="input-field">
-                                    <label style="margin-left:-14%;">PAGIBIG:</label>
-                                    <input type="text">
-                                </div>
-                                <div class="input-field">
-                                    <label>SSS:</label>
-                                    <input type="text">
+                                <div class="inputs-div2">
+                                    <b>Other Deductions: </b>
+                                    <div class="input-field" style="margin-left:-14%;">
+                                        <input type="text">
+                                        <input type="text">
+                                    </div>
+                                    <div class="input-field" style="margin-left:-14%;">
+                                        <input type="text">
+                                        <input type="text">
+                                    </div>
+                                    <div class="input-field" style="margin-left:-14%;">
+                                        <input type="text">
+                                        <input type="text">
+                                    </div>
+                                    <div class="input-field" style="margin-left:-14%;">
+                                        <input type="text">
+                                        <input type="text">
+                                    </div>
+                                    <div class="input-field" style="margin-left:-20%;">
+                                        <label>Total Deductions:</label>
+                                        <input type="text">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="inputs-div2">
-                                <b>Other Deductions: </b>
-                                <div class="input-field" style="margin-left:-14%;">
-                                    <input type="text">
-                                    <input type="text">
-                                </div>
-                                <div class="input-field" style="margin-left:-14%;">
-                                    <input type="text">
-                                    <input type="text">
-                                </div>
-                                <div class="input-field" style="margin-left:-14%;">
-                                    <input type="text">
-                                    <input type="text">
-                                </div>
-                                <div class="input-field" style="margin-left:-14%;">
-                                    <input type="text">
-                                    <input type="text">
-                                </div>
-                                <div class="input-field" style="margin-left:-20%;">
-                                    <label>Total Deductions:</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="row last_row">
                         <div class="col-sm-12 last_row_col">
@@ -539,7 +546,32 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        const daily_rate = document.getElementById('daily_rate').value;
+        const grosspay = getElementById('grosspay').value;
+
         
+        document.getElementById('grosspay').value = gross_pay;
+
+        function numdays_comp(value){
+            let num_days = daily_rate * value;
+
+            rate_wage= document.getElementById('num_of_days').value = num_days;
+        }
+        function ot_hr_comp(value){
+            let ot_hr,ot_hr_pay;
+            ot_hr = daily_rate / 8;
+            ot_hr_pay = value * ot_hr;
+
+            ot_pay = document.getElementById('ot_hr').value = ot_hr_pay;
+        }
+        function holid_comp(value){
+            let holiday_pay_rate,holiday_pay;
+            holiday_pay_rate = daily_rate * 2;
+            holiday_pay = holiday_pay_rate * value;
+
+            holidayy_pay= document.getElementById('holiday_pays').value = holiday_pay;
+        }
+
     </script>
 </body>
 </html>
