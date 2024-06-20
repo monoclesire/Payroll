@@ -275,7 +275,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                 <div class="inputs-div2">
                                     <div class="input-field" style="margin-top:10%;">
                                         <label>Rate Wage:</label>
-                                        <input type="text" id="num_of_days" onkeyup = "wage_value(this.value);">
+                                        <input type="text" id="num_of_days" readonly onkeyup = "wage_value(this.value);">
                                     </div>
                                     <div class="input-field">
                                         <label>Ot hr/Day Pay:</label>
@@ -547,31 +547,35 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const daily_rate = document.getElementById('daily_rate').value;
-        const grosspay = getElementById('grosspay').value;
 
-        
-        document.getElementById('grosspay').value = gross_pay;
+        function updateGrossPay() {
+            let num_of_days = parseFloat(document.getElementById('num_of_days').value) || 0;
+            let ot_hr = parseFloat(document.getElementById('ot_hr').value) || 0;
+            let holiday_pays = parseFloat(document.getElementById('holiday_pays').value) || 0;
+
+            let grosspay = num_of_days + ot_hr + holiday_pays;
+            document.getElementById('grosspay').value = grosspay.toFixed(2);
+        }
 
         function numdays_comp(value){
             let num_days = daily_rate * value;
 
-            rate_wage= document.getElementById('num_of_days').value = num_days;
+            document.getElementById('num_of_days').value = num_days.toFixed(2);
+            updateGrossPay();
         }
         function ot_hr_comp(value){
-            let ot_hr,ot_hr_pay;
-            ot_hr = daily_rate / 8;
-            ot_hr_pay = value * ot_hr;
-
-            ot_pay = document.getElementById('ot_hr').value = ot_hr_pay;
+            let ot_hr = daily_rate / 8;
+            let ot_hr_pay = value * ot_hr;
+            document.getElementById('ot_hr').value = ot_hr_pay.toFixed(2);
+            updateGrossPay();
         }
         function holid_comp(value){
-            let holiday_pay_rate,holiday_pay;
-            holiday_pay_rate = daily_rate * 2;
-            holiday_pay = holiday_pay_rate * value;
+            let holiday_pay_rate = daily_rate * 2;
+            let holiday_pay = holiday_pay_rate * value;
 
-            holidayy_pay= document.getElementById('holiday_pays').value = holiday_pay;
+            document.getElementById('holiday_pays').value = holiday_pay.toFixed(2);
+            updateGrossPay();
         }
-
     </script>
 </body>
 </html>
