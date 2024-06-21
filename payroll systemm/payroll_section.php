@@ -29,6 +29,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="payroll_section.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Leave Section</title>
 </head>
 
@@ -257,37 +258,37 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                 <div class="inputs-div1">
                                     <div class="input-field" style="margin-top:-10%;margin-bottom:3%;margin-left:13%;">
                                         <label>Rate per Day:</label>
-                                        <input type="text" id="daily_rate" value="<?php echo $dl['Daily_rate'] ?>" readonly>
+                                        <input type="number" id="daily_rate" value="<?php echo $dl['Daily_rate'] ?>" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>No. of Days:</label>
-                                        <input type="text" onkeyup = "numdays_comp(this.value);">
+                                        <input type="number" id="num_days" onkeyup = "numdays_comp(this.value);">
                                     </div>
                                     <div class="input-field">
                                         <label>OT hr/Day:</label>
-                                        <input type="text" onkeyup = "ot_hr_comp(this.value);">
+                                        <input type="number" id="ot_hrs" onkeyup = "ot_hr_comp(this.value);">
                                     </div>
                                     <div class="input-field">
                                         <label style="margin-left: -10%;">Holiday Pay(day):</label>
-                                        <input type="text" onkeyup = "holid_comp(this.value);">
+                                        <input type="number" id="holi_pay" onkeyup = "holid_comp(this.value);">
                                     </div>
                                 </div>
                                 <div class="inputs-div2">
                                     <div class="input-field" style="margin-top:10%;">
                                         <label>Rate Wage:</label>
-                                        <input type="text" id="num_of_days" readonly onkeyup = "wage_value(this.value);">
+                                        <input type="number" id="num_of_days" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>Ot hr/Day Pay:</label>
-                                        <input type="text" id="ot_hr" readonly>
+                                        <input type="number" id="ot_hr" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>Holiday Pay:</label>
-                                        <input type="text" id="holiday_pays" readonly>
+                                        <input type="number" id="holiday_pays" readonly>
                                     </div>
                                     <div class="input-field" style="margin-top:20px;margin-left:-20%;">
                                         <label>Gross pay:</label>
-                                        <input type="text" id="grosspay" style="width: 170px;height: 45px;" readonly>
+                                        <input type="number" id="grosspay" style="width: 170px;height: 45px;" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -295,39 +296,43 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                 <b>Deductions:</b>
                                 <div class="inputs-div1">
                                     <div class="input-field">
-                                        <label style="margin-left:-20%;">Philhealth:</label>
-                                        <input type="text" readonly>
+                                        <label style="margin-left:-20%;">PhilHealth:</label>
+                                        <input type="number" id="philhealth" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label style="margin-left:-14%;">PAGIBIG:</label>
-                                        <input type="text" readonly>
+                                        <input type="number" id="pagibig" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>SSS:</label>
-                                        <input type="text" readonly>
+                                        <input type="number" id="sss" readonly>
+                                    </div>
+                                    <div class="input-field" style="margin-left:-43%;">
+                                        <label>Total Deductions:</label>
+                                        <input type="number" id="total_deductions" readonly>
                                     </div>
                                 </div>
                                 <div class="inputs-div2">
                                     <b>Other Deductions: </b>
                                     <div class="input-field" style="margin-left:-14%;">
-                                        <input type="text">
-                                        <input type="text">
+                                        <p style="margin-left:8%;margin-bottom:0;">Name of <br>deduction</p>
+                                        <p style="width: auto; margin-left:15%;margin-bottom:0;">Value</p>
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="text">
+                                        <input type="number" class="other_deduc">
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="text">
+                                        <input type="number" class="other_deduc">
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="text">
+                                        <input type="number" class="other_deduc">
                                     </div>
-                                    <div class="input-field" style="margin-left:-20%;">
-                                        <label>Total Deductions:</label>
+                                    <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
+                                        <input type="number" class="other_deduc">
                                     </div>
                                 </div>
                             </div>
@@ -337,7 +342,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                         <div class="col-sm-12 last_row_col">
                             <div class="input-field">
                                 <label style="font-size: 25px;font-weight: 500;">Net Pay:</label>
-                                <input type="text" style="width: 200px;height: 45px;">
+                                <input type="number" id="netpay" style="width: 200px;height: 45px;" readonly>
                             </div>
                             <div class="btns_div">
                                 <button class="change-pass-btn">Reset</button>
@@ -544,7 +549,6 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             // Ensure other necessary JavaScript functionalities are correctly implemented here
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const daily_rate = document.getElementById('daily_rate').value;
 
@@ -556,18 +560,19 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             let grosspay = num_of_days + ot_hr + holiday_pays;
             document.getElementById('grosspay').value = grosspay.toFixed(2);
         }
-
         function numdays_comp(value){
             let num_days = daily_rate * value;
 
             document.getElementById('num_of_days').value = num_days.toFixed(2);
             updateGrossPay();
+            netPay();
         }
         function ot_hr_comp(value){
             let ot_hr = daily_rate / 8;
             let ot_hr_pay = value * ot_hr;
             document.getElementById('ot_hr').value = ot_hr_pay.toFixed(2);
             updateGrossPay();
+            netPay();
         }
         function holid_comp(value){
             let holiday_pay_rate = daily_rate * 2;
@@ -575,7 +580,82 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
 
             document.getElementById('holiday_pays').value = holiday_pay.toFixed(2);
             updateGrossPay();
+            netPay();
         }
+        function benefits_deductions(){
+            let philHealth_total,pagibig_total,sss_total;
+            let monthly = daily_rate * 30;
+            let gross_pay_deduc = parseFloat(document.getElementById('grosspay').value) || 0;
+
+            philHealth_total = monthly * 0.045;
+            pagibig_total = monthly * 0.05;
+            sss_total = monthly * 0.02;
+
+            document.getElementById('philhealth').value = philHealth_total.toFixed(2);
+            document.getElementById('pagibig').value = pagibig_total.toFixed(2);
+            document.getElementById('sss').value = sss_total.toFixed(2);
+        }
+        benefits_deductions();
+        function total_deductions(){
+            let pagibig_deduc = parseFloat(document.getElementById('pagibig').value) || 0;
+            let sss_deduc = parseFloat(document.getElementById('sss').value) || 0;
+            let philhealth_deduc = parseFloat(document.getElementById('philhealth').value) || 0;
+
+            let total_deductions =  philhealth_deduc + pagibig_deduc + sss_deduc;
+            document.getElementById('total_deductions').value = total_deductions.toFixed(2);
+        }
+        total_deductions();
+        function calculateTotalDeductions() {
+            const inputs = document.querySelectorAll('.other_deduc');
+            let additionalTotal = 0;
+
+            inputs.forEach(input => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    additionalTotal += value;
+                }
+            });
+
+            const baseValue = parseFloat(document.getElementById('total_deductions').dataset.baseValue);
+            document.getElementById('total_deductions').value = baseValue + additionalTotal;
+            netPay();
+        }
+
+        // Initialize base value on page load
+        window.addEventListener('load', () => {
+            const totalDeductionsInput = document.getElementById('total_deductions');
+            const baseValue = parseFloat(totalDeductionsInput.value) || 0;
+
+            totalDeductionsInput.dataset.baseValue = baseValue;
+        });
+
+        // Add event listeners to input fields
+        document.querySelectorAll('.other_deduc').forEach(input => {
+            input.addEventListener('input', calculateTotalDeductions);
+        });
+
+        function netPay(){
+            let gross_pay = parseFloat(document.getElementById('grosspay').value) || 0;
+            let total_deduc = parseFloat(document.getElementById('total_deductions').value) || 0;
+
+            if(gross_pay == 0){
+                const netBaseValue = parseFloat(document.getElementById('netpay').dataset.netBaseValue);
+                document.getElementById('netpay').value = netBaseValue;
+            }
+            else{
+                let total_net_pay = gross_pay - total_deduc;
+                document.getElementById('netpay').value = total_net_pay;
+            }
+
+            
+            
+        }
+        window.addEventListener('load',() =>{
+            const totalNetpayInput = document.getElementById('netpay');
+            const netBaseValue = parseFloat(totalNetpayInput.value) || 0;
+
+            totalNetpayInput.dataset.netBaseValue = netBaseValue;
+        });
     </script>
 </body>
 </html>
