@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2024 at 06:02 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.2.15
+-- Generation Time: Jun 22, 2024 at 07:55 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -43,7 +42,7 @@ CREATE TABLE `employee_accounts` (
   `bank_name` varchar(55) NOT NULL,
   `Position_number` int(11) NOT NULL,
   `leave_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `employee_accounts`
@@ -72,7 +71,7 @@ CREATE TABLE `employee_pending_leaves` (
   `Leave_type` varchar(55) NOT NULL,
   `applied_date` datetime NOT NULL,
   `status` varchar(55) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `employee_pending_leaves`
@@ -98,7 +97,7 @@ CREATE TABLE `employee_positions` (
   `Position_number` int(11) NOT NULL,
   `Position` varchar(55) NOT NULL,
   `Daily_rate` int(55) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `employee_positions`
@@ -109,6 +108,34 @@ INSERT INTO `employee_positions` (`Position_number`, `Position`, `Daily_rate`) V
 (2, 'Manager', 1100),
 (3, 'Crew-Manager', 500),
 (4, 'Senior-Crew', 500);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_salary_datas`
+--
+
+CREATE TABLE `employee_salary_datas` (
+  `employee_payslip_id` int(11) NOT NULL,
+  `month` varchar(55) NOT NULL,
+  `position_name` varchar(20) NOT NULL,
+  `worked_hours` int(20) NOT NULL,
+  `overtime_hours` int(20) NOT NULL,
+  `overtime_pay` int(20) NOT NULL,
+  `holiday_pay` int(20) NOT NULL,
+  `gross_pay` int(20) NOT NULL,
+  `net_pay` int(20) NOT NULL,
+  `total_deductions` int(20) NOT NULL,
+  `date_transaction` date NOT NULL,
+  `time_transaction` time NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee_salary_datas`
+--
+
+INSERT INTO `employee_salary_datas` (`employee_payslip_id`, `month`, `position_name`, `worked_hours`, `overtime_hours`, `overtime_pay`, `holiday_pay`, `gross_pay`, `net_pay`, `total_deductions`, `date_transaction`, `time_transaction`) VALUES
+(1, 'asdafas', 'dasdadsasd', 312, 5, 412312, 12312, 421312, 12312, 123123, '0000-00-00', '00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -135,6 +162,12 @@ ALTER TABLE `employee_positions`
   ADD PRIMARY KEY (`Position_number`);
 
 --
+-- Indexes for table `employee_salary_datas`
+--
+ALTER TABLE `employee_salary_datas`
+  ADD PRIMARY KEY (`employee_payslip_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -155,6 +188,12 @@ ALTER TABLE `employee_pending_leaves`
 --
 ALTER TABLE `employee_positions`
   MODIFY `Position_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `employee_salary_datas`
+--
+ALTER TABLE `employee_salary_datas`
+  MODIFY `employee_payslip_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

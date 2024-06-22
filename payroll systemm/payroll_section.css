@@ -500,7 +500,7 @@ body.dark .sidebar li a:hover .text{
     justify-content: space-between;
 }
 
-.change-pass-btn {
+.all_buttons {
     background-color: #325E89; /* Ensure this color is set */
     color: #fff;
     border: none;
@@ -512,17 +512,17 @@ body.dark .sidebar li a:hover .text{
     transition: var(--tran-03);
 }
 
-.change-pass-btn:hover {
+.all_buttons:hover {
     background-color: #6A96B9;
 }
 
 .last_row {
     background-color: #fff;
-    width: 96%;
+    width: 98%;
     border-collapse: collapse;
     padding: 3px;
-    margin-left: 1%;
-    margin-top: 0.5%;
+    margin-left: 0.1%;
+    margin-top: 1%;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }

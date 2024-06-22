@@ -112,10 +112,10 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             </div>
             <div class="row dropdown-inputs-div">
                 <div class="col-sm-12">
-                    <form method="POST" class="positionForm" value="Submit" onsubmit="return validateForm();">
+                    <form method="POST" class="positionForm" onsubmit="return validateForm();">
                         <div class="dropdown month-dropdown">
                             <div class="dropdown-input-container">
-                                <input type="text" class="dropdown-input" placeholder="Select month" readonly>
+                                <input type="text" name="month" class="dropdown-input" placeholder="Select month" required readonly>
                                 <div class="arrow-container">
                                     <div class="arrow-up">&#9650;</div>
                                     <div class="arrow-down">&#9660;</div>
@@ -154,7 +154,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                         </div>
                         <div class="dropdown">
                             <div class="dropdown-input-container">
-                                    <input type="text" name="position_name" id="position_name" class="dropdown-input" placeholder="Select position" readonly onclick="toggleDropdown('positionDropdown')">
+                                    <input type="text" name="position_name" id="position_name" class="dropdown-input" placeholder="Select position" required readonly onclick="toggleDropdown('positionDropdown')">
                                 <div class="arrow-container">
                                     <div class="arrow-up" onclick="toggleDropdown('positionDropdown')">&#9650;</div>
                                     <div class="arrow-down" onclick="toggleDropdown('positionDropdown')">&#9660;</div>
@@ -180,18 +180,18 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                 <!-- Employees will be dynamically populated here -->
                             </div>
                         </div>
-                        <input type="submit" class="change-pass-btn" name="submit" >
+                        <input type="submit" class="all_buttons" name="components" >
                     </form>
                 </div>
             </div>
 
-            <form class="row" id="payrollSection" onsubmit="return validateForm();" style="display: none;">
+            <form class="row" id="payrollSection" style="display: none;" onsubmit="return payslipForm();"> 
                 <div class="x-sm-12">
                     <div class="row tablee">
                         <div class="col-sm-12">
                             <table>
                                 <?php
-                                if(isset($_POST['submit'])){
+                                if(isset($_POST['components'])){
                                     $position_namee = $_POST['position_name'];
                                     $employee_name = $_POST['emp_name'];
                                 
@@ -252,43 +252,43 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                     $dl = mysqli_fetch_assoc($daily_rate);
                     ?>
                     <div class="row payslip_div">
-                        <form method="POST" class="payslip_div">
+                        <form method="POST" class="payslip_div" onsubmit="return payslipForm();">
                             <div class="col-sm-6 income-div">
                                 <b>Income:</b>
                                 <div class="inputs-div1">
                                     <div class="input-field" style="margin-top:-10%;margin-bottom:3%;margin-left:13%;">
                                         <label>Rate per Day:</label>
-                                        <input type="number" id="daily_rate" value="<?php echo $dl['Daily_rate'] ?>" readonly>
+                                        <input type="number" id="daily_rate" name="daily_rate" value="<?php echo $dl['Daily_rate'] ?>" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>No. of Days:</label>
-                                        <input type="number" id="num_days" onkeyup = "numdays_comp(this.value);">
+                                        <input type="number" id="num_days" name="num_days" onkeyup="numdays_comp(this.value);">
                                     </div>
                                     <div class="input-field">
                                         <label>OT hr/Day:</label>
-                                        <input type="number" id="ot_hrs" onkeyup = "ot_hr_comp(this.value);">
+                                        <input type="number" id="ot_hrs" name="ot_hrs" onkeyup="ot_hr_comp(this.value);">
                                     </div>
                                     <div class="input-field">
                                         <label style="margin-left: -10%;">Holiday Pay(day):</label>
-                                        <input type="number" id="holi_pay" onkeyup = "holid_comp(this.value);">
+                                        <input type="number" id="holi_pay" name="holi_pay" onkeyup="holid_comp(this.value);">
                                     </div>
                                 </div>
                                 <div class="inputs-div2">
                                     <div class="input-field" style="margin-top:10%;">
                                         <label>Rate Wage:</label>
-                                        <input type="number" id="num_of_days" readonly>
+                                        <input type="number" id="num_of_days" name="num_of_days"  readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>Ot hr/Day Pay:</label>
-                                        <input type="number" id="ot_hr" readonly>
+                                        <input type="number" id="ot_hr" name="ot_hr"  readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>Holiday Pay:</label>
-                                        <input type="number" id="holiday_pays" readonly>
+                                        <input type="number" id="holiday_pays" name="holiday_pays"  readonly>
                                     </div>
                                     <div class="input-field" style="margin-top:20px;margin-left:-20%;">
                                         <label>Gross pay:</label>
-                                        <input type="number" id="grosspay" style="width: 170px;height: 45px;" readonly>
+                                        <input type="number" name="total_grosspay" id="grosspay" style="width: 170px;height: 45px;" readonly required>
                                     </div>
                                 </div>
                             </div>
@@ -297,19 +297,19 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                 <div class="inputs-div1">
                                     <div class="input-field">
                                         <label style="margin-left:-20%;">PhilHealth:</label>
-                                        <input type="number" id="philhealth" readonly>
+                                        <input type="number" id="philhealth" name="philhealth" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label style="margin-left:-14%;">PAGIBIG:</label>
-                                        <input type="number" id="pagibig" readonly>
+                                        <input type="number" id="pagibig" name="pagibig" readonly>
                                     </div>
                                     <div class="input-field">
                                         <label>SSS:</label>
-                                        <input type="number" id="sss" readonly>
+                                        <input type="number" id="sss" name="sss" readonly>
                                     </div>
                                     <div class="input-field" style="margin-left:-43%;">
                                         <label>Total Deductions:</label>
-                                        <input type="number" id="total_deductions" readonly>
+                                        <input type="number" name="total_deduction_name" id="total_deductions" readonly>
                                     </div>
                                 </div>
                                 <div class="inputs-div2">
@@ -320,36 +320,36 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="number" class="other_deduc">
+                                        <input type="number" class="other_deduc" >
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="number" class="other_deduc">
+                                        <input type="number" class="other_deduc" >
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="number" class="other_deduc">
+                                        <input type="number" class="other_deduc" >
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
                                         <input type="text">
-                                        <input type="number" class="other_deduc">
+                                        <input type="number" class="other_deduc" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row last_row">
+                                <div class="col-sm-12 last_row_col">
+                                    <div class="input-field">
+                                        <label style="font-size: 25px;font-weight: 500;">Net Pay:</label>
+                                        <input type="number" id="netpay" name="netpay" style="width: 200px;height: 45px;" readonly>
+                                    </div>
+                                    <div class="btns_div">
+                                        <button type="button" class="all_buttons" onclick="resetForm()">Reset</button>
+                                        <button type="button" class="all_buttons" onclick="cancelTransaction()">Cancel</button>
+                                        <input type="submit" class="all_buttons" name="gen_payslip" value="Generate Payslip">
                                     </div>
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="row last_row">
-                        <div class="col-sm-12 last_row_col">
-                            <div class="input-field">
-                                <label style="font-size: 25px;font-weight: 500;">Net Pay:</label>
-                                <input type="number" id="netpay" style="width: 200px;height: 45px;" readonly>
-                            </div>
-                            <div class="btns_div">
-                                <button class="change-pass-btn">Reset</button>
-                                <button class="change-pass-btn">Cancel</button>
-                                <button class="change-pass-btn">Generate Payslip</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </form>
@@ -533,14 +533,22 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             var positionName = document.getElementById("position_name").value;
             var employeeName = document.getElementById("emp_name").value;
 
-            console.log("Position Name:", positionName);
-            console.log("Employee Name:", employeeName);
-
             if (positionName === "" || employeeName === "") {
                 alert("Both position and employee name must be selected.");
                 return false; // Prevent form submission
             }
             return true; // Allow form submission
+        }
+
+        function payslipForm() {
+            let grosspays = document.getElementById("grosspay").value;
+            let deductions = document.getElementById("total_deductions").value;
+
+            if (grosspays === "" || deductions === "") {
+                alert("Please input first!");
+                return false; // Prevent form submission
+            }
+            return true ; // Allow form submission
         }
 
         // Event listener to initialize dropdowns and other necessary functionalities
@@ -637,6 +645,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
         function netPay(){
             let gross_pay = parseFloat(document.getElementById('grosspay').value) || 0;
             let total_deduc = parseFloat(document.getElementById('total_deductions').value) || 0;
+            let total_netpay = parseFloat(document.getElementById('netpay').value);
 
             if(gross_pay == 0){
                 const netBaseValue = parseFloat(document.getElementById('netpay').dataset.netBaseValue);
@@ -644,11 +653,9 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
             }
             else{
                 let total_net_pay = gross_pay - total_deduc;
-                document.getElementById('netpay').value = total_net_pay;
+                document.getElementById('netpay').value = total_net_pay.toFixed(2);
             }
 
-            
-            
         }
         window.addEventListener('load',() =>{
             const totalNetpayInput = document.getElementById('netpay');
