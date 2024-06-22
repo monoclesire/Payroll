@@ -628,6 +628,11 @@ body.dark .sidebar li a:hover .text{
     align-items: center;
     justify-content: space-evenly;
 }
+.form_div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button{

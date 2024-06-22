@@ -22,7 +22,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'fetch_employees' && isset($_POS
 if(isset($_POST['gen_payslip'])){
     $month = $_POST['hidden_month'];
     $position_name = $_POST['hidden_position'];
-    $worked_hrs = $_POST['num_days'] * 24;
+    $worked_hrs = $_POST['num_days'];
     $overtime_hrs = $_POST['ot_hrs'];
     $overtime_pay = $_POST['ot_hr'];
     $holiday_pay = $_POST['holiday_pays'];
@@ -35,6 +35,7 @@ if(isset($_POST['gen_payslip'])){
 
     if($gross_pay !== 0 && $total_deductions !== 0 && $net_pay !== 0){
         mysqli_query($connect,$net_pay_sql);
+        echo "<script>alert('Salary generated Successfully!')</script>";
     }
 }
 ?>
@@ -130,10 +131,10 @@ if(isset($_POST['gen_payslip'])){
             </div>
             <div class="row dropdown-inputs-div">
                 <div class="col-sm-12">
-                    <form method="POST" id="firstForm" class="positionForm">
+                    <form method="POST" id="firstForm" class="positionForm" onsubmit="return validateForm();">
                         <div class="dropdown month-dropdown">
                             <div class="dropdown-input-container">
-                                <input type="text" name="month" id="month" class="dropdown-input" placeholder="Select month" required readonly>
+                                <input type="text" name="month" class="dropdown-input" placeholder="Select month" required readonly>
                                 <div class="arrow-container">
                                     <div class="arrow-up">&#9650;</div>
                                     <div class="arrow-down">&#9660;</div>
@@ -203,14 +204,13 @@ if(isset($_POST['gen_payslip'])){
                 </div>
             </div>
 
-            <div class="row" id="payrollSection" style="display: none;" onsubmit="return payslipForm();">
+            <div class="row" id="payrollSection" style="display: none;" onsubmit="return payslipForm()">
                 <div class="x-sm-12">
                     <div class="row tablee">
                         <div class="col-sm-12">
                             <table>
                                 <?php
                                 if(isset($_POST['components'])){
-                                    $month = $_POST['month'];
                                     $position_namee = $_POST['position_name'];
                                     $employee_name = $_POST['emp_name'];
                                 
@@ -272,8 +272,8 @@ if(isset($_POST['gen_payslip'])){
                     ?>
                     <div class="row payslip_div">
                         <form method="POST" class="row payslip_div">
-                            <input type="hidden" name="hidden_month" id="secondFormMonth" value="<?php echo $month ?>">
-                            <input type="hidden" name="hidden_position" id="secondFormPositionName" value="<?php echo $employee_name ?>">
+                            <input type="hidden" name="hidden_month" id="secondFormMonth">
+                            <input type="hidden" name="hidden_position" id="secondFormPositionName">
                             <div class="col-sm-6 income-div">
                                 <b>Income:</b>
                                 <div class="inputs-div1">
@@ -340,19 +340,19 @@ if(isset($_POST['gen_payslip'])){
                                         <p style="width: auto; margin-left:15%;margin-bottom:0;">Value</p>
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
-                                        <input type="text">
+                                        <input type="text" name="other_deductions_name[]">
                                         <input type="number" class="other_deduc" >
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
-                                        <input type="text">
+                                        <input type="text" name="other_deductions_name[]">
                                         <input type="number" class="other_deduc" >
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
-                                        <input type="text">
+                                        <input type="text" name="other_deductions_name[]">
                                         <input type="number" class="other_deduc" >
                                     </div>
                                     <div class="input-field" style="margin-left:-14%;">
-                                        <input type="text">
+                                        <input type="text" name="other_deductions_name[]">
                                         <input type="number" class="other_deduc" >
                                     </div>
                                 </div>
@@ -548,6 +548,18 @@ if(isset($_POST['gen_payslip'])){
             xhr.send("ajax=fetch_employees&position_name=" + encodeURIComponent(position));
         }
 
+        // Function to validate form submission
+        function validateForm() {
+            var positionName = document.getElementById("position_name").value;
+            var employeeName = document.getElementById("emp_name").value;
+
+            if (positionName === "" || employeeName === "") {
+                alert("Both position and employee name must be selected.");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
         function payslipForm(){
             let grosspays = document.getElementById("grosspay").value;
             let deductions = document.getElementById("total_deductions").value;
@@ -559,16 +571,11 @@ if(isset($_POST['gen_payslip'])){
             return true ; // Allow form submission
         }
 
-        function validateForm() {
-            var positionName = document.getElementById("position_name").value;
-            var employeeName = document.getElementById("emp_name").value;
-
-            if (positionName === "" || employeeName === "") {
-                alert("Both position and employee name must be selected.");
-                return false; // Prevent form submission
-            }
-            return true; // Allow form submission
-        }
+        document.getElementById('firstForm').onsubmit = function() {
+            document.getElementById('secondFormMonth').value = document.getElementById('month').value;
+            document.getElementById('secondFormPositionName').value = document.getElementById('position_name').value;
+            return true;
+        };
 
         // Event listener to initialize dropdowns and other necessary functionalities
         document.addEventListener("DOMContentLoaded", function() {
@@ -648,8 +655,6 @@ if(isset($_POST['gen_payslip'])){
             netPay();
         }
 
-        
-
         // Initialize base value on page load
         window.addEventListener('load', () => {
             const totalDeductionsInput = document.getElementById('total_deductions');
@@ -674,16 +679,10 @@ if(isset($_POST['gen_payslip'])){
             }
             else{
                 let total_net_pay = gross_pay - total_deduc;
-
-                if (total_net_pay < 0) {
-                    total_net_pay = 0;
-                }
-                
                 document.getElementById('netpay').value = total_net_pay.toFixed(2);
             }
 
         }
-        
         window.addEventListener('load',() =>{
             const totalNetpayInput = document.getElementById('netpay');
             const netBaseValue = parseFloat(totalNetpayInput.value) || 0;
@@ -691,22 +690,6 @@ if(isset($_POST['gen_payslip'])){
             totalNetpayInput.dataset.netBaseValue = netBaseValue;
         });
         function resetForm() {
-            let totalDeductions = parseFloat(document.getElementById('total_deductions').value) || 0;
-
-            // Calculate the sum of other deductions
-            let otherDeductions = document.querySelectorAll('.other_deduc');
-            let otherDeductionsTotal = 0;
-            otherDeductions.forEach(deduction => {
-                otherDeductionsTotal += parseFloat(deduction.value) || 0;
-            });
-
-            // Subtract the sum of other deductions from total deductions
-            totalDeductions -= otherDeductionsTotal;
-
-            // Update the total deductions
-            document.getElementById('total_deductions').value = totalDeductions.toFixed(2);
-
-            // Reset the form fields
             document.getElementById('num_days').value = '';
             document.getElementById('ot_hrs').value = '';
             document.getElementById('holi_pay').value = '';
@@ -715,9 +698,8 @@ if(isset($_POST['gen_payslip'])){
             document.getElementById('holiday_pays').value = '';
             document.getElementById('grosspay').value = '';
             document.getElementById('netpay').value = '';
-            otherDeductions.forEach(input => input.value = '');
+            document.querySelectorAll('.other_deduc').forEach(input => input.value = '');
             document.querySelector('.payslip_div').reset();
-
         }
 
         function cancelTransaction() {
