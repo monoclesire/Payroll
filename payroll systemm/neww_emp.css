@@ -6,6 +6,18 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
 
 :root{
     /* ===== Colors ===== */
@@ -22,6 +34,13 @@
     --tran-03: all 0.3s ease;
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
+}
+.dt-column-title {
+    color: #2C4972;
+}
+
+.td-color {
+    background-color: red;
 }
 
 body{
@@ -300,6 +319,7 @@ body.dark .home .text{
     margin: 10px;
     margin-top: 2%;
     transition: all 0.3s ease-in-out;
+    margin-right: -3%;
 }
 
 .add-emp button {
@@ -447,6 +467,7 @@ body.dark .home .text{
 .modal-header {
     background-color: #325E89; /* Blue background color */
     color: white;
+    text-align: center;
 }
 .modal-footer button:hover {
     background-color: #6A96B9;
@@ -456,7 +477,10 @@ body.dark .home .text{
     background-color: #C1D7E2;
     color: black;
     cursor: pointer;
+
 }
+
+
 .btn-secondary{
     background-color: #C1D7E2;
     color: black;
