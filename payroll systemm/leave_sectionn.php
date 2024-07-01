@@ -119,7 +119,7 @@ include('database.php');
                                 </thead>
                                 <tbody>
                                 <?php
-                                    $pending_sql = "SELECT * FROM employee_pending_leaves WHERE status='pending'";
+                                    $pending_sql = "SELECT * FROM employee_leaves WHERE status='pending'";
                                     $pending_query = mysqli_query($connect,$pending_sql);
                                 
                                     while($pending = mysqli_fetch_assoc($pending_query)){
@@ -170,7 +170,7 @@ include('database.php');
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $approved_sql = "SELECT * FROM employee_pending_leaves WHERE status='Approved'";
+                                        $approved_sql = "SELECT * FROM employee_leaves WHERE status='Approved'";
                                         $approved_query = mysqli_query($connect,$approved_sql);
                                         
                                         while($approved = mysqli_fetch_assoc($approved_query)){
@@ -203,7 +203,7 @@ include('database.php');
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $declined_sql = "SELECT * FROM employee_pending_leaves WHERE status='Declined'";
+                                        $declined_sql = "SELECT * FROM employee_leaves WHERE status='Declined'";
                                         $declined_query = mysqli_query($connect,$declined_sql);                                        
                                     
                                         while($declined = mysqli_fetch_assoc($declined_query)){
@@ -230,7 +230,7 @@ include('database.php');
     <?php
         if(isset($_POST['approve'])){
             $leave_id = $_POST['approve_id'];
-            $approvesql = "UPDATE employee_pending_leaves SET status = 'Approved' WHERE leave_id ='$leave_id'";
+            $approvesql = "UPDATE employee_leaves SET status = 'Approved' WHERE leave_id ='$leave_id'";
             $approve_btn_qry = mysqli_query($connect,$approvesql);
 
             echo '<script>alert("Leave Approved!")</script>';
@@ -238,7 +238,7 @@ include('database.php');
         }
         else if(isset($_POST['decline'])){
             $leave_idd = $_POST['decline_id'];
-            $declinedsql = "UPDATE employee_pending_leaves SET status = 'Declined' WHERE leave_id = '$leave_idd'";
+            $declinedsql = "UPDATE employee_leaves SET status = 'Declined' WHERE leave_id = '$leave_idd'";
             $decline_btn_qry = mysqli_query($connect,$declinedsql);
 
             echo '<script>alert("Leave Declined!")</script>';
